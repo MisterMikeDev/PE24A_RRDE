@@ -16,7 +16,9 @@ namespace PE24A_RRDE
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(
+                new DlgPrincipal()
+            );
         }
     }
 }

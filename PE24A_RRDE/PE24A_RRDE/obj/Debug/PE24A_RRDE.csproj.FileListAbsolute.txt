@@ -7,3 +7,4 @@ C:\Dev\learning-csharp\PE24A_RRDE\PE24A_RRDE\obj\Debug\PE24A_RRDE.csproj.Generat
 C:\Dev\learning-csharp\PE24A_RRDE\PE24A_RRDE\obj\Debug\PE24A_RRDE.csproj.CoreCompileInputs.cache
 C:\Dev\learning-csharp\PE24A_RRDE\PE24A_RRDE\obj\Debug\PE24A_RRDE.exe
 C:\Dev\learning-csharp\PE24A_RRDE\PE24A_RRDE\obj\Debug\PE24A_RRDE.pdb
+C:\Dev\learning-csharp\PE24A_RRDE\PE24A_RRDE\obj\Debug\PE24A_RRDE.DlgPrincipal.resources
