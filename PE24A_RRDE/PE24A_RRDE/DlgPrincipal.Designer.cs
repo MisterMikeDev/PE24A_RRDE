@@ -225,6 +225,7 @@
             this.BtnMesaPracticas1.TabIndex = 4;
             this.BtnMesaPracticas1.Text = "Mesa practica 1";
             this.BtnMesaPracticas1.UseVisualStyleBackColor = false;
+            this.BtnMesaPracticas1.Click += new System.EventHandler(this.BtnMesaPracticas1_Click_1);
             // 
             // DlgPrincipal
             // 

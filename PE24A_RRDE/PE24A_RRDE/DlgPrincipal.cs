@@ -20,7 +20,7 @@ namespace PE24A_RRDE
         /* ------------------------------------------------------------------------- */
         // Botón de activación de Mes de Prácticas 1
         /* ------------------------------------------------------------------------- */
-        private void BtnMesaPracticas1_Click(object sender, EventArgs e)
+        private void BtnMesaPracticas1_Click_1(object sender, EventArgs e)
         {
             DlgMesaParcticas1 dlgMesaParcticas1 = new DlgMesaParcticas1();
 
