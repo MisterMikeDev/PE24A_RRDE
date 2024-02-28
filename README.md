@@ -21,4 +21,5 @@ En este repositorio iré subiendo los avances de las tareas y proyectos que se r
 En esta materia estamos creando multiples proyectos los cuales se irán agregando a las diferentes mesas de trabajo.
 
 - **Actualmente:** Creando la mesa de trabajo 1 por la practica 2.
-  ![Demo image](/public/Demo2.png)
+
+![Demo image](/public/Demo2.png)
