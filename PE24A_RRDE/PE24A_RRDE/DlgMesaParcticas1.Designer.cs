@@ -32,6 +32,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.LogoMesa1 = new System.Windows.Forms.PictureBox();
             this.PnlIzquierdo = new System.Windows.Forms.Panel();
+            this.BtnP2Diagonal = new System.Windows.Forms.Button();
             this.BtnP2Llenar = new System.Windows.Forms.Button();
             this.BtnP2Activar = new System.Windows.Forms.Button();
             this.BtnFillTabla = new System.Windows.Forms.Button();
@@ -40,18 +41,22 @@
             this.TextBoxNum2 = new System.Windows.Forms.TextBox();
             this.TextBoxNum1 = new System.Windows.Forms.TextBox();
             this.PnlDerecho = new System.Windows.Forms.Panel();
+            this.TextBoxSalida5 = new System.Windows.Forms.TextBox();
+            this.LblSalida5 = new System.Windows.Forms.Label();
+            this.TextBoxSalida4 = new System.Windows.Forms.TextBox();
+            this.LblSalida4 = new System.Windows.Forms.Label();
+            this.TextBoxSalida3 = new System.Windows.Forms.TextBox();
+            this.LblSalida3 = new System.Windows.Forms.Label();
+            this.TextBoxSalida2 = new System.Windows.Forms.TextBox();
+            this.LblSalida2 = new System.Windows.Forms.Label();
+            this.TextBoxSalida1 = new System.Windows.Forms.TextBox();
+            this.LblSalida1 = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.PnlCentral = new System.Windows.Forms.Panel();
             this.DgvTabla1 = new System.Windows.Forms.DataGridView();
             this.ColNombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColApellidoP = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColApellidoM = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.LblSalida1 = new System.Windows.Forms.Label();
-            this.TextBoxSalida1 = new System.Windows.Forms.TextBox();
-            this.TextBoxSalida2 = new System.Windows.Forms.TextBox();
-            this.LblSalida2 = new System.Windows.Forms.Label();
-            this.TextBoxSalida3 = new System.Windows.Forms.TextBox();
-            this.LblSalida3 = new System.Windows.Forms.Label();
             this.PnlSuperior.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.LogoMesa1)).BeginInit();
             this.PnlIzquierdo.SuspendLayout();
@@ -95,6 +100,7 @@
             // PnlIzquierdo
             // 
             this.PnlIzquierdo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(79)))), ((int)(((byte)(79)))));
+            this.PnlIzquierdo.Controls.Add(this.BtnP2Diagonal);
             this.PnlIzquierdo.Controls.Add(this.BtnP2Llenar);
             this.PnlIzquierdo.Controls.Add(this.BtnP2Activar);
             this.PnlIzquierdo.Controls.Add(this.BtnFillTabla);
@@ -107,6 +113,16 @@
             this.PnlIzquierdo.Name = "PnlIzquierdo";
             this.PnlIzquierdo.Size = new System.Drawing.Size(150, 728);
             this.PnlIzquierdo.TabIndex = 1;
+            // 
+            // BtnP2Diagonal
+            // 
+            this.BtnP2Diagonal.Location = new System.Drawing.Point(16, 443);
+            this.BtnP2Diagonal.Name = "BtnP2Diagonal";
+            this.BtnP2Diagonal.Size = new System.Drawing.Size(118, 50);
+            this.BtnP2Diagonal.TabIndex = 7;
+            this.BtnP2Diagonal.Text = "P2 Diagonal";
+            this.BtnP2Diagonal.UseVisualStyleBackColor = true;
+            this.BtnP2Diagonal.Click += new System.EventHandler(this.BtnP2Diagonal_Click);
             // 
             // BtnP2Llenar
             // 
@@ -176,6 +192,10 @@
             // 
             this.PnlDerecho.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(79)))), ((int)(((byte)(79)))));
             this.PnlDerecho.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.PnlDerecho.Controls.Add(this.TextBoxSalida5);
+            this.PnlDerecho.Controls.Add(this.LblSalida5);
+            this.PnlDerecho.Controls.Add(this.TextBoxSalida4);
+            this.PnlDerecho.Controls.Add(this.LblSalida4);
             this.PnlDerecho.Controls.Add(this.TextBoxSalida3);
             this.PnlDerecho.Controls.Add(this.LblSalida3);
             this.PnlDerecho.Controls.Add(this.TextBoxSalida2);
@@ -188,6 +208,91 @@
             this.PnlDerecho.Name = "PnlDerecho";
             this.PnlDerecho.Size = new System.Drawing.Size(150, 728);
             this.PnlDerecho.TabIndex = 2;
+            // 
+            // TextBoxSalida5
+            // 
+            this.TextBoxSalida5.Location = new System.Drawing.Point(17, 326);
+            this.TextBoxSalida5.Name = "TextBoxSalida5";
+            this.TextBoxSalida5.Size = new System.Drawing.Size(100, 20);
+            this.TextBoxSalida5.TabIndex = 10;
+            // 
+            // LblSalida5
+            // 
+            this.LblSalida5.AutoSize = true;
+            this.LblSalida5.ForeColor = System.Drawing.Color.White;
+            this.LblSalida5.Location = new System.Drawing.Point(17, 309);
+            this.LblSalida5.Name = "LblSalida5";
+            this.LblSalida5.Size = new System.Drawing.Size(45, 13);
+            this.LblSalida5.TabIndex = 9;
+            this.LblSalida5.Text = "Salida 5";
+            // 
+            // TextBoxSalida4
+            // 
+            this.TextBoxSalida4.Location = new System.Drawing.Point(18, 275);
+            this.TextBoxSalida4.Name = "TextBoxSalida4";
+            this.TextBoxSalida4.Size = new System.Drawing.Size(100, 20);
+            this.TextBoxSalida4.TabIndex = 8;
+            // 
+            // LblSalida4
+            // 
+            this.LblSalida4.AutoSize = true;
+            this.LblSalida4.ForeColor = System.Drawing.Color.White;
+            this.LblSalida4.Location = new System.Drawing.Point(18, 258);
+            this.LblSalida4.Name = "LblSalida4";
+            this.LblSalida4.Size = new System.Drawing.Size(45, 13);
+            this.LblSalida4.TabIndex = 7;
+            this.LblSalida4.Text = "Salida 4";
+            // 
+            // TextBoxSalida3
+            // 
+            this.TextBoxSalida3.Location = new System.Drawing.Point(18, 214);
+            this.TextBoxSalida3.Name = "TextBoxSalida3";
+            this.TextBoxSalida3.Size = new System.Drawing.Size(100, 20);
+            this.TextBoxSalida3.TabIndex = 6;
+            // 
+            // LblSalida3
+            // 
+            this.LblSalida3.AutoSize = true;
+            this.LblSalida3.ForeColor = System.Drawing.Color.White;
+            this.LblSalida3.Location = new System.Drawing.Point(18, 197);
+            this.LblSalida3.Name = "LblSalida3";
+            this.LblSalida3.Size = new System.Drawing.Size(45, 13);
+            this.LblSalida3.TabIndex = 5;
+            this.LblSalida3.Text = "Salida 3";
+            // 
+            // TextBoxSalida2
+            // 
+            this.TextBoxSalida2.Location = new System.Drawing.Point(18, 156);
+            this.TextBoxSalida2.Name = "TextBoxSalida2";
+            this.TextBoxSalida2.Size = new System.Drawing.Size(100, 20);
+            this.TextBoxSalida2.TabIndex = 4;
+            // 
+            // LblSalida2
+            // 
+            this.LblSalida2.AutoSize = true;
+            this.LblSalida2.ForeColor = System.Drawing.Color.White;
+            this.LblSalida2.Location = new System.Drawing.Point(18, 139);
+            this.LblSalida2.Name = "LblSalida2";
+            this.LblSalida2.Size = new System.Drawing.Size(45, 13);
+            this.LblSalida2.TabIndex = 3;
+            this.LblSalida2.Text = "Salida 2";
+            // 
+            // TextBoxSalida1
+            // 
+            this.TextBoxSalida1.Location = new System.Drawing.Point(18, 99);
+            this.TextBoxSalida1.Name = "TextBoxSalida1";
+            this.TextBoxSalida1.Size = new System.Drawing.Size(100, 20);
+            this.TextBoxSalida1.TabIndex = 2;
+            // 
+            // LblSalida1
+            // 
+            this.LblSalida1.AutoSize = true;
+            this.LblSalida1.ForeColor = System.Drawing.Color.White;
+            this.LblSalida1.Location = new System.Drawing.Point(18, 82);
+            this.LblSalida1.Name = "LblSalida1";
+            this.LblSalida1.Size = new System.Drawing.Size(45, 13);
+            this.LblSalida1.TabIndex = 1;
+            this.LblSalida1.Text = "Salida 1";
             // 
             // comboBox1
             // 
@@ -238,57 +343,6 @@
             // 
             this.ColApellidoM.HeaderText = "Apellido Materno";
             this.ColApellidoM.Name = "ColApellidoM";
-            // 
-            // LblSalida1
-            // 
-            this.LblSalida1.AutoSize = true;
-            this.LblSalida1.ForeColor = System.Drawing.Color.White;
-            this.LblSalida1.Location = new System.Drawing.Point(18, 82);
-            this.LblSalida1.Name = "LblSalida1";
-            this.LblSalida1.Size = new System.Drawing.Size(45, 13);
-            this.LblSalida1.TabIndex = 1;
-            this.LblSalida1.Text = "Salida 1";
-            // 
-            // TextBoxSalida1
-            // 
-            this.TextBoxSalida1.Location = new System.Drawing.Point(18, 99);
-            this.TextBoxSalida1.Name = "TextBoxSalida1";
-            this.TextBoxSalida1.Size = new System.Drawing.Size(100, 20);
-            this.TextBoxSalida1.TabIndex = 2;
-            // 
-            // TextBoxSalida2
-            // 
-            this.TextBoxSalida2.Location = new System.Drawing.Point(18, 156);
-            this.TextBoxSalida2.Name = "TextBoxSalida2";
-            this.TextBoxSalida2.Size = new System.Drawing.Size(100, 20);
-            this.TextBoxSalida2.TabIndex = 4;
-            // 
-            // LblSalida2
-            // 
-            this.LblSalida2.AutoSize = true;
-            this.LblSalida2.ForeColor = System.Drawing.Color.White;
-            this.LblSalida2.Location = new System.Drawing.Point(18, 139);
-            this.LblSalida2.Name = "LblSalida2";
-            this.LblSalida2.Size = new System.Drawing.Size(45, 13);
-            this.LblSalida2.TabIndex = 3;
-            this.LblSalida2.Text = "Salida 2";
-            // 
-            // TextBoxSalida3
-            // 
-            this.TextBoxSalida3.Location = new System.Drawing.Point(18, 214);
-            this.TextBoxSalida3.Name = "TextBoxSalida3";
-            this.TextBoxSalida3.Size = new System.Drawing.Size(100, 20);
-            this.TextBoxSalida3.TabIndex = 6;
-            // 
-            // LblSalida3
-            // 
-            this.LblSalida3.AutoSize = true;
-            this.LblSalida3.ForeColor = System.Drawing.Color.White;
-            this.LblSalida3.Location = new System.Drawing.Point(18, 197);
-            this.LblSalida3.Name = "LblSalida3";
-            this.LblSalida3.Size = new System.Drawing.Size(45, 13);
-            this.LblSalida3.TabIndex = 5;
-            this.LblSalida3.Text = "Salida 3";
             // 
             // DlgMesaParcticas1
             // 
@@ -341,5 +395,10 @@
         private System.Windows.Forms.Label LblSalida1;
         private System.Windows.Forms.TextBox TextBoxSalida3;
         private System.Windows.Forms.Label LblSalida3;
+        private System.Windows.Forms.Button BtnP2Diagonal;
+        private System.Windows.Forms.TextBox TextBoxSalida4;
+        private System.Windows.Forms.Label LblSalida4;
+        private System.Windows.Forms.TextBox TextBoxSalida5;
+        private System.Windows.Forms.Label LblSalida5;
     }
 }

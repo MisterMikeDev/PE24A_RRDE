@@ -73,7 +73,6 @@
             this.PnlMainContent.Name = "PnlMainContent";
             this.PnlMainContent.Size = new System.Drawing.Size(1484, 808);
             this.PnlMainContent.TabIndex = 1;
-            this.PnlMainContent.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint_1);
             // 
             // BtnMesaPracticas6
             // 
@@ -226,7 +225,6 @@
             this.BtnMesaPracticas1.TabIndex = 4;
             this.BtnMesaPracticas1.Text = "Mesa practica 1";
             this.BtnMesaPracticas1.UseVisualStyleBackColor = false;
-            this.BtnMesaPracticas1.Click += new System.EventHandler(this.BtnMesaPracticas1_Click);
             // 
             // DlgPrincipal
             // 

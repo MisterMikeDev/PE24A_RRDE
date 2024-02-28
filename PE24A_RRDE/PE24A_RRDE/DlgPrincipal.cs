@@ -72,19 +72,7 @@ namespace PE24A_RRDE
         /* ------------------------------------------------------------------------- */
         private void DlgPrincipal_Load(object sender, EventArgs e)
         {
-        }
-
-        private void panel1_Paint_1(object sender, PaintEventArgs e)
-        {
 
         }
-
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-
-        }
-        /* ------------------------------------------------------------------------- */
-        // Metodos inecesarios (de momento)
-        /* ------------------------------------------------------------------------- */
     }
 }

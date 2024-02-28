@@ -73,6 +73,9 @@ namespace PE24A_RRDE
         /* ------------------------------------------------------------------------- */
         private void BtnMostrarPractica1_Click(object sender, EventArgs e)
         {
+            /* ------------------------------------------------------------------------- */
+            // Hace un toggle a la visibilidad de la tabla
+            /* ------------------------------------------------------------------------- */
             DgvTabla1.Visible = !DgvTabla1.Visible;
         }
 
@@ -81,6 +84,9 @@ namespace PE24A_RRDE
         /* ------------------------------------------------------------------------- */
         private void BtnFillTabla_Click(object sender, EventArgs e)
         {
+            /* ------------------------------------------------------------------------- */
+            // Limpia la tabla
+            /* ------------------------------------------------------------------------- */
             DgvTabla1.Rows.Clear();
 
             int Index = 4, RowReference = 0;
@@ -91,10 +97,21 @@ namespace PE24A_RRDE
                 {
                     for (int z = 0; z < Index; z++)
                     {
+                        /* ------------------------------------------------------------------------- */
+                        // Agrega los valores a la tabla
+                        /* ------------------------------------------------------------------------- */
                         DgvTabla1.Rows.Add();
+
+                        /* ------------------------------------------------------------------------- */
+                        // Asigna los valores a las celdas
+                        /* ------------------------------------------------------------------------- */
                         DgvTabla1.Rows[RowReference].Cells[0].Value = $"{x}";
                         DgvTabla1.Rows[RowReference].Cells[1].Value = $"{y}";
                         DgvTabla1.Rows[RowReference].Cells[2].Value = $"{z}";
+
+                        /* ------------------------------------------------------------------------- */
+                        // Incrementa el valor de la referencia de la fila
+                        /* ------------------------------------------------------------------------- */
                         RowReference++;
                     }
 
@@ -109,6 +126,9 @@ namespace PE24A_RRDE
 
         private void CreateCeills()
         {
+            /* ------------------------------------------------------------------------- */
+            // Variables
+            /* ------------------------------------------------------------------------- */
             int NumColumna = DgvTabla2.ColumnCount;
             bool isNumber;
             Random random = new Random();
@@ -128,6 +148,9 @@ namespace PE24A_RRDE
                 }
             }
 
+            /* ------------------------------------------------------------------------- */
+            // Limpia la tabla
+            /* ------------------------------------------------------------------------- */
             DgvTabla2.Rows.Clear();
             DgvTabla2.Columns.Clear();
 
@@ -149,6 +172,9 @@ namespace PE24A_RRDE
                
                 for (int c = 0; c < NumColumna; c++)
                 {
+                    /* ------------------------------------------------------------------------- */
+                    // Agrega valores aleatorios a las celdas
+                    /* ------------------------------------------------------------------------- */
                     DgvTabla2.Rows[r - 1].Cells[c].Value = $"{random.Next() % 10}";
                 }
             }   
@@ -162,25 +188,28 @@ namespace PE24A_RRDE
             PnlCentral.Controls.Clear();
             DgvTabla2 = new DataGridView();
             PnlCentral.Controls.Add(DgvTabla2);
-            
+
 
             /* ------------------------------------------------------------------------- */
             // Genera la configuración basica del componente
             /* ------------------------------------------------------------------------- */
+            DgvTabla2.AllowUserToAddRows = false;
+            DgvTabla2.AllowUserToResizeColumns = false;
+            DgvTabla2.AllowUserToResizeRows = false;
+            DgvTabla2.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells; // !!!!!!!!!!
             DgvTabla2.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             DgvTabla2.Dock = DockStyle.Fill;
-            DgvTabla2.Location = new System.Drawing.Point(0, 0);
+            DgvTabla2.Location = new Point(0, 0);
             DgvTabla2.Name = "DgvTabla2";
             DgvTabla2.RowHeadersWidth = 30;
-            DgvTabla2.RowTemplate.Height = 28;
-            DgvTabla2.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells; // !!!!!!!!!!
-            DgvTabla2.Size = new System.Drawing.Size(678, 429);
-            DgvTabla2.TabIndex = 0;
-            DgvTabla2.AllowUserToAddRows = false;
-            DgvTabla2.AllowUserToResizeRows = false;
-            DgvTabla2.AllowUserToResizeColumns = false;
             DgvTabla2.RowHeadersWidth = 4;
+            DgvTabla2.RowTemplate.Height = 28;
+            DgvTabla2.Size = new Size(678, 429);
+            DgvTabla2.TabIndex = 0;
 
+            /* ------------------------------------------------------------------------- */
+            // Agrega las columnas
+            /* ------------------------------------------------------------------------- */
             CreateCeills();
         }
 
@@ -191,8 +220,9 @@ namespace PE24A_RRDE
         /* ------------------------------------------------------------------------- */
         private void BtnP2Llenar_Click(object sender, EventArgs e)
         {
-            CreateCeills();
-
+            /* ------------------------------------------------------------------------- */
+            // Variables
+            /* ------------------------------------------------------------------------- */
             int RowCount = DgvTabla2.RowCount,
                 ColCount = DgvTabla2.ColumnCount,
                 SumaTotal = 0,
@@ -200,8 +230,17 @@ namespace PE24A_RRDE
                 SumaInpar = 0,
                 CurrentCeilValue,
                 PrevCeilValue = 0;
+            bool isWork, isFirstIteration = true;
 
-            bool isWork;
+            /* ------------------------------------------------------------------------- */
+            // En caso de que no se haya creado la tabla
+            // se llama a la función que la crea y se establece
+            // que ya se ha hecho la primera iteración
+            /* ------------------------------------------------------------------------- */
+            if (!isFirstIteration) {
+                CreateCeills();
+                isFirstIteration = false;
+            }
 
             for ( int i = 0; i < RowCount; i++)
             {
@@ -214,7 +253,7 @@ namespace PE24A_RRDE
 
                     if (!isWork)
                     {
-                        MessageBox.Show("Hay valores extraños en la matriz");
+                        MessageBox.Show("No se puede obtener el valor de la celda actual.");
                         return;
                     }
 
@@ -227,7 +266,7 @@ namespace PE24A_RRDE
 
                         if (!isWork)
                         {
-                            MessageBox.Show("Hay valores extraños en la matriz");
+                            MessageBox.Show("No se puede obtener el valor de la siguente celda.");
                             return;
                         }
                     }
@@ -284,6 +323,37 @@ namespace PE24A_RRDE
             TextBoxSalida3.Text = $"{SumaInpar}";
             TextBoxSalida2.BackColor = Color.Yellow;
             TextBoxSalida3.BackColor = Color.LightGreen;
+        }
+
+        private void BtnP2Diagonal_Click(object sender, EventArgs e)
+        {
+            int RowCount = DgvTabla2.RowCount,
+                ColCount = DgvTabla2.ColumnCount,
+                SumaDiagonal1 = 0,
+                SumaDiagonal2 = 0;
+
+            for (int i = 0; i < RowCount; i++)
+            {
+                /* ------------------------------------------------------------------------- */
+                // Se le asigna el color a las celdas de la diagonal de izquierda a derecha
+                /* ------------------------------------------------------------------------- */
+                DgvTabla2.Rows[i].Cells[i].Style.BackColor = Color.Blue;
+                SumaDiagonal1 += int.Parse(DgvTabla2.Rows[i].Cells[i].Value.ToString());
+
+                /* ------------------------------------------------------------------------- */
+                // Se le asigna el color a las celdas de la diagonal de derecha a izquierda
+                /* ------------------------------------------------------------------------- */
+                DgvTabla2.Rows[i].Cells[ColCount - i - 1].Style.BackColor = Color.Magenta;
+                SumaDiagonal2 += int.Parse(DgvTabla2.Rows[i].Cells[ColCount - i - 1].Value.ToString());
+            }
+
+            /* ------------------------------------------------------------------------- */
+            // Se le asignan los valores a los inputs y se les da su color respectivo
+            /* ------------------------------------------------------------------------- */
+            TextBoxSalida4.Text = $"{SumaDiagonal1}";
+            TextBoxSalida4.BackColor = Color.Blue;
+            TextBoxSalida5.Text = $"{SumaDiagonal2}";
+            TextBoxSalida5.BackColor = Color.Magenta;
         }
     }
 }
