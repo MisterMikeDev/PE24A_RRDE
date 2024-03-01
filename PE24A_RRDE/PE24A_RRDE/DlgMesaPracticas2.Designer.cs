@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DlgMesaPracticas2));
             this.PnlCentral = new System.Windows.Forms.Panel();
             this.PicSpotify = new System.Windows.Forms.PictureBox();
             this.PicBatery = new System.Windows.Forms.PictureBox();
@@ -118,6 +119,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1484, 808);
             this.Controls.Add(this.PnlCentral);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "DlgMesaPracticas2";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "PE Mesa Practicas 2";

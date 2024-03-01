@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DlgMesaPracticas1));
             this.PnlSuperior = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.LogoMesa1 = new System.Windows.Forms.PictureBox();
@@ -374,6 +375,7 @@
             this.Controls.Add(this.PnlDerecho);
             this.Controls.Add(this.PnlIzquierdo);
             this.Controls.Add(this.PnlSuperior);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "DlgMesaPracticas1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "PE Mesa Parcticas 1";

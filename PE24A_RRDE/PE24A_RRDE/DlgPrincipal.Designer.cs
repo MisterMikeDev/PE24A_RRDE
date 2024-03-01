@@ -198,6 +198,7 @@
             // 
             this.ClientSize = new System.Drawing.Size(1484, 808);
             this.Controls.Add(this.PnlMainContent);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "DlgPrincipal";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Programación Estructurada 24A";
