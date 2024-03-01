@@ -1,6 +1,6 @@
 ﻿namespace PE24A_RRDE
 {
-    partial class DlgMesaParcticas1
+    partial class DlgMesaPracticas1
     {
         /// <summary>
         /// Required designer variable.
@@ -41,6 +41,8 @@
             this.TextBoxNum2 = new System.Windows.Forms.TextBox();
             this.TextBoxNum1 = new System.Windows.Forms.TextBox();
             this.PnlDerecho = new System.Windows.Forms.Panel();
+            this.TextBoxSalida6 = new System.Windows.Forms.TextBox();
+            this.LblSalida6 = new System.Windows.Forms.Label();
             this.TextBoxSalida5 = new System.Windows.Forms.TextBox();
             this.LblSalida5 = new System.Windows.Forms.Label();
             this.TextBoxSalida4 = new System.Windows.Forms.TextBox();
@@ -142,7 +144,7 @@
             this.BtnP2Activar.TabIndex = 5;
             this.BtnP2Activar.Text = "P2 Activar";
             this.BtnP2Activar.UseVisualStyleBackColor = true;
-            this.BtnP2Activar.Click += new System.EventHandler(this.button2_Click);
+            this.BtnP2Activar.Click += new System.EventHandler(this.BtnP2Activar_Click);
             // 
             // BtnFillTabla
             // 
@@ -192,6 +194,8 @@
             // 
             this.PnlDerecho.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(79)))), ((int)(((byte)(79)))));
             this.PnlDerecho.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.PnlDerecho.Controls.Add(this.TextBoxSalida6);
+            this.PnlDerecho.Controls.Add(this.LblSalida6);
             this.PnlDerecho.Controls.Add(this.TextBoxSalida5);
             this.PnlDerecho.Controls.Add(this.LblSalida5);
             this.PnlDerecho.Controls.Add(this.TextBoxSalida4);
@@ -208,6 +212,23 @@
             this.PnlDerecho.Name = "PnlDerecho";
             this.PnlDerecho.Size = new System.Drawing.Size(150, 728);
             this.PnlDerecho.TabIndex = 2;
+            // 
+            // TextBoxSalida6
+            // 
+            this.TextBoxSalida6.Location = new System.Drawing.Point(18, 378);
+            this.TextBoxSalida6.Name = "TextBoxSalida6";
+            this.TextBoxSalida6.Size = new System.Drawing.Size(100, 20);
+            this.TextBoxSalida6.TabIndex = 12;
+            // 
+            // LblSalida6
+            // 
+            this.LblSalida6.AutoSize = true;
+            this.LblSalida6.ForeColor = System.Drawing.Color.White;
+            this.LblSalida6.Location = new System.Drawing.Point(18, 361);
+            this.LblSalida6.Name = "LblSalida6";
+            this.LblSalida6.Size = new System.Drawing.Size(45, 13);
+            this.LblSalida6.TabIndex = 11;
+            this.LblSalida6.Text = "Salida 6";
             // 
             // TextBoxSalida5
             // 
@@ -344,7 +365,7 @@
             this.ColApellidoM.HeaderText = "Apellido Materno";
             this.ColApellidoM.Name = "ColApellidoM";
             // 
-            // DlgMesaParcticas1
+            // DlgMesaPracticas1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -353,9 +374,9 @@
             this.Controls.Add(this.PnlDerecho);
             this.Controls.Add(this.PnlIzquierdo);
             this.Controls.Add(this.PnlSuperior);
-            this.Name = "DlgMesaParcticas1";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Mesa Parcticas 1";
+            this.Name = "DlgMesaPracticas1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "PE Mesa Parcticas 1";
             this.PnlSuperior.ResumeLayout(false);
             this.PnlSuperior.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.LogoMesa1)).EndInit();
@@ -400,5 +421,7 @@
         private System.Windows.Forms.Label LblSalida4;
         private System.Windows.Forms.TextBox TextBoxSalida5;
         private System.Windows.Forms.Label LblSalida5;
+        private System.Windows.Forms.TextBox TextBoxSalida6;
+        private System.Windows.Forms.Label LblSalida6;
     }
 }

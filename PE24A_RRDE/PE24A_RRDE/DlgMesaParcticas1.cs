@@ -8,12 +8,18 @@ namespace PE24A_RRDE
     // Mesa de trabajo del proyecto Programación Estructurada 24A
     // RRDE. 31/01/2024.
     /* ------------------------------------------------------------------------- */
-    public partial class DlgMesaParcticas1 : Form
+    public partial class DlgMesaPracticas1 : Form
     {
+        /* ------------------------------------------------------------------------- */
+        // Variables globales
+        /* ------------------------------------------------------------------------- */
+        DataGridView DgvTabla2;
+        bool isFirstTimeToCalculate = true;
+
         /* ------------------------------------------------------------------------- */
         // Constructor
         /* ------------------------------------------------------------------------- */
-        public DlgMesaParcticas1()
+        public DlgMesaPracticas1()
         {
             InitializeComponent();
         }
@@ -32,15 +38,9 @@ namespace PE24A_RRDE
             bool isNumber1 = int.TryParse(TextBoxNum1.Text, out num1),
                  isNumber2 = int.TryParse(TextBoxNum2.Text, out num2);
 
-            /*
-             * Se valida si los datos ingresados
-             * son realmente numeros
-             * @param {isNumber1} bool
-             * @param {isNumber2} bool
-             * @return void
-             * En caso de no cumplir la condicion
-             * no devuelve nada y se hace focus al imput
-             */
+            /* ------------------------------------------------------------------------- */
+            // Validaciones
+            /* ------------------------------------------------------------------------- */
             if (!isNumber1)
             {
                 MessageBox.Show("Debes introducir un NUMERO en el imput 1");
@@ -54,17 +54,14 @@ namespace PE24A_RRDE
                 return;
             }
 
-            /* 
-             * Se hace la suma de los numeros
-             * @param {isNumber1} bool
-             * @param {isNumber2} bool
-             * @return {res} int
-             */
+            /* ------------------------------------------------------------------------- */
+            // Operación
+            /* ------------------------------------------------------------------------- */
             res = num1 + num2;
 
-            /*
-             * Se muestra un alert del resultado
-             */
+            /* ------------------------------------------------------------------------- */
+            // Muestra el resultado
+            /* ------------------------------------------------------------------------- */
             MessageBox.Show($"La suma de los numeros es: {res}");
         }
 
@@ -122,7 +119,6 @@ namespace PE24A_RRDE
         /* ------------------------------------------------------------------------- */
         // Botón de Activar tabla Practica 2
         /* ------------------------------------------------------------------------- */
-        DataGridView DgvTabla2;
 
         private void CreateCeills()
         {
@@ -130,7 +126,7 @@ namespace PE24A_RRDE
             // Variables
             /* ------------------------------------------------------------------------- */
             int NumColumna = DgvTabla2.ColumnCount;
-            bool isNumber;
+            bool isNumber ;
             Random random = new Random();
 
             /* ------------------------------------------------------------------------- */
@@ -177,10 +173,9 @@ namespace PE24A_RRDE
                     /* ------------------------------------------------------------------------- */
                     DgvTabla2.Rows[r - 1].Cells[c].Value = $"{random.Next() % 10}";
                 }
-            }   
-        }
+            }           }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void BtnP2Activar_Click(object sender, EventArgs e)
         {
             /* ------------------------------------------------------------------------- */
             // Construye el componente
@@ -228,18 +223,22 @@ namespace PE24A_RRDE
                 SumaTotal = 0,
                 SumaPar = 0,
                 SumaInpar = 0,
+                SumaConjuntosRepetidos = 0,
+                PrevCeilValue = 0,
                 CurrentCeilValue,
-                PrevCeilValue = 0;
-            bool isWork, isFirstIteration = true;
+                NextCeilValue = 0;
+            bool isWork;
 
             /* ------------------------------------------------------------------------- */
-            // En caso de que no se haya creado la tabla
-            // se llama a la función que la crea y se establece
-            // que ya se ha hecho la primera iteración
+            // En caso de que sea la primera vez que se calcula la matriz no
+            // se pinta las celdas, en caso contrario se repintan
             /* ------------------------------------------------------------------------- */
-            if (!isFirstIteration) {
+            if (isFirstTimeToCalculate)
+            {
+                isFirstTimeToCalculate = false;
+            } else
+            {
                 CreateCeills();
-                isFirstIteration = false;
             }
 
             for ( int i = 0; i < RowCount; i++)
@@ -262,7 +261,7 @@ namespace PE24A_RRDE
                     /* ------------------------------------------------------------------------- */
                     if (j + 1 < ColCount)
                     {
-                        isWork = int.TryParse(DgvTabla2.Rows[i].Cells[j + 1].Value.ToString(), out PrevCeilValue);
+                        isWork = int.TryParse(DgvTabla2.Rows[i].Cells[j + 1].Value.ToString(), out NextCeilValue);
 
                         if (!isWork)
                         {
@@ -282,7 +281,7 @@ namespace PE24A_RRDE
                     // sí el valor de la celda actual es igual al valor de la celda anterior
                     // entonces se pintan ambos de color rojo
                     /* ------------------------------------------------------------------------- */
-                    if (j + 1 < ColCount && CurrentCeilValue == PrevCeilValue)
+                    if (j + 1 < ColCount && CurrentCeilValue == NextCeilValue)
                     {
                         DgvTabla2.Rows[i].Cells[j].Style.BackColor = Color.Red;
                         DgvTabla2.Rows[i].Cells[j + 1].Style.BackColor = Color.Red;
@@ -315,14 +314,81 @@ namespace PE24A_RRDE
                 }
             }
 
+            for (int i = 0; i < RowCount; i++)
+            {
+                for (int j = 0; j < ColCount; j++)
+                {
+                    /* ------------------------------------------------------------------------- */
+                    // Obtener el valor de la celda actual
+                    /* ------------------------------------------------------------------------- */
+                    isWork = int.TryParse(DgvTabla2.Rows[i].Cells[j].Value.ToString(), out CurrentCeilValue);
+
+                    if (!isWork)
+                    {
+                        MessageBox.Show("No se puede obtener el valor de la celda actual.");
+                        return;
+                    }
+
+                    /* ------------------------------------------------------------------------- */
+                    // Obtener el valor de la celda anterior
+                    /* ------------------------------------------------------------------------- */
+                    if (j > 0)
+                    {
+                        isWork = int.TryParse(DgvTabla2.Rows[i].Cells[j - 1].Value.ToString(), out PrevCeilValue);
+
+                        if (!isWork)
+                        {
+                            MessageBox.Show("No se puede obtener el valor de la celda anterior.");
+                            return;
+                        }
+                    }
+
+                    /* ------------------------------------------------------------------------- */
+                    // Obtener el valor de la siguiente celda
+                    /* ------------------------------------------------------------------------- */
+                    if (j + 1 < ColCount)
+                    {
+                        isWork = int.TryParse(DgvTabla2.Rows[i].Cells[j + 1].Value.ToString(), out NextCeilValue);
+
+                        if (!isWork)
+                        {
+                            MessageBox.Show("No se puede obtener el valor de la siguente celda.");
+                            return;
+                        }
+                    } else
+                    {
+                        NextCeilValue = -1;
+                    }
+
+                    /* ------------------------------------------------------------------------- */
+                    // Hace una comprobación de si el valor de la interción de la columna
+                    // del valor anterior, sí el numero se sale de la matriz lo ignora
+                    // sí el valor de la celda actual es igual al valor de la celda anterior
+                    // entonces se pintan ambos de color rojo
+                    /* ------------------------------------------------------------------------- */
+                    if (
+                        j > 0 &&
+                        j < ColCount &&
+                        (DgvTabla2.Rows[i].Cells[j].Style.BackColor == Color.Red) &&
+                        PrevCeilValue == CurrentCeilValue &&
+                        CurrentCeilValue != NextCeilValue
+                       )
+                    {
+                        SumaConjuntosRepetidos++;
+                    }
+                }
+            }
+
             /* ------------------------------------------------------------------------- */
             // Se le asignan los valores a los inputs y se les da su color respectivo
             /* ------------------------------------------------------------------------- */
             TextBoxSalida1.Text = $"{SumaTotal}";
             TextBoxSalida2.Text = $"{SumaPar}";
             TextBoxSalida3.Text = $"{SumaInpar}";
+            TextBoxSalida6.Text = $"{SumaConjuntosRepetidos}";
             TextBoxSalida2.BackColor = Color.Yellow;
             TextBoxSalida3.BackColor = Color.LightGreen;
+            TextBoxSalida6.BackColor = Color.Red;
         }
 
         private void BtnP2Diagonal_Click(object sender, EventArgs e)
