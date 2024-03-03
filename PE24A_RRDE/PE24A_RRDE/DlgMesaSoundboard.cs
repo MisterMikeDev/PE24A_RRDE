@@ -47,6 +47,10 @@ namespace PE24A_RRDE
             BtnSound10.Text = "Fak";
             BtnSound11.Text = "Donde está el Titan Speackerman";
             BtnSound12.Text = "Donde dice esa mmada";
+            BtnSound13.Text = "Capitan torta 🤙";
+            BtnSound14.Text = "Δ 1";
+            BtnSound15.Text = "El Zapato";
+            BtnSound16.Text = "A sorry everybody\nfollows me";
 
             /* ------------------------------------------------------------------------- */
             // Eventos
@@ -81,7 +85,11 @@ namespace PE24A_RRDE
             // separación a los lados de 10
             if (Window[0] > 1010)
             {
-                Top = Window[1] / 2 - (Btn[1] * 3 + 20) / 2;
+                /* ------------------------------------------------------------------------- */
+                // Centramos verticalmente los botones con proporcion tanto arriba como abajo 
+                /* ------------------------------------------------------------------------- */
+                Top = Window[1] / 2 - (Btn[1] * 4 + 30) / 2;
+
                 /* ------------------------------------------------------------------------- */
                 // Creamos una fila de 4 botones que esten centrados que tengan una separación a los lados de 10
                 /* ------------------------------------------------------------------------- */
@@ -97,12 +105,23 @@ namespace PE24A_RRDE
                 BtnSound10.Location = new Point(BtnSound9.Location.X + Btn[0] + 10, Top + Btn[1] * 2 + 20);
                 BtnSound11.Location = new Point(BtnSound10.Location.X + Btn[0] + 10, Top + Btn[1] * 2 + 20);
                 BtnSound12.Location = new Point(BtnSound11.Location.X + Btn[0] + 10, Top + Btn[1] * 2 + 20);
-            } else
+                BtnSound13.Location = new Point((Window[0] - (Btn[0] * 4 + 30)) / 2, Top + Btn[1] * 3 + 30);
+                BtnSound14.Location = new Point(BtnSound13.Location.X + Btn[0] + 10, Top + Btn[1] * 3 + 30);
+                BtnSound15.Location = new Point(BtnSound14.Location.X + Btn[0] + 10, Top + Btn[1] * 3 + 30);
+                BtnSound16.Location = new Point(BtnSound15.Location.X + Btn[0] + 10, Top + Btn[1] * 3 + 30);
+
+            }
+            else
             {
                 /* ------------------------------------------------------------------------- */
                 // Ajustamos el top para que los botones esten más arriba
                 /* ------------------------------------------------------------------------- */
-                Top = Window[1] / 2 - (Btn[1] * 6 + 60) / 2;
+                Top = (Window[1] / 2 - (Btn[1] * 8 + 70) / 2) + 10;
+
+                /* ------------------------------------------------------------------------- */
+                // Ajustamo el posicionamiento del título
+                /* ------------------------------------------------------------------------- */
+                LblTitle.Location = new Point((Window[0] - Title[0]) / 2, 0);
 
                 /* ------------------------------------------------------------------------- */
                 // Creamos una fila de 2 botones que esten centrados que tengan una separación a los lados de 10
@@ -119,81 +138,160 @@ namespace PE24A_RRDE
                 BtnSound10.Location = new Point(BtnSound9.Location.X + Btn[0] + 10, Top + Btn[1] * 4 + 40);
                 BtnSound11.Location = new Point((Window[0] - (Btn[0] * 2 + 10)) / 2, Top + Btn[1] * 5 + 50);
                 BtnSound12.Location = new Point(BtnSound11.Location.X + Btn[0] + 10, Top + Btn[1] * 5 + 50);
+                BtnSound13.Location = new Point((Window[0] - (Btn[0] * 2 + 10)) / 2, Top + Btn[1] * 6 + 60);
+                BtnSound14.Location = new Point(BtnSound13.Location.X + Btn[0] + 10, Top + Btn[1] * 6 + 60);
+                BtnSound15.Location = new Point((Window[0] - (Btn[0] * 2 + 10)) / 2, Top + Btn[1] * 7 + 70);
+                BtnSound16.Location = new Point(BtnSound15.Location.X + Btn[0] + 10, Top + Btn[1] * 7 + 70);
             }
         }
 
+        /* ------------------------------------------------------------------------- */
+        // Sonido 1
+        /* ------------------------------------------------------------------------- */
         private void BtnSound1_Click(object sender, EventArgs e)
         {
             CurrentSound = new SoundPlayer(@"C:\Dev\learning-csharp\PE24A_RRDE\PE24A_RRDE\Resources\Soundboard\Yowaimo.wav");
             CurrentSound.Play();
         }
 
+        /* ------------------------------------------------------------------------- */
+        // Sonido 2
+        /* ------------------------------------------------------------------------- */
         private void BtnSound2_Click(object sender, EventArgs e)
         {
             CurrentSound = new SoundPlayer(@"C:\Dev\learning-csharp\PE24A_RRDE\PE24A_RRDE\Resources\Soundboard\NooooMiCompa.wav");
             CurrentSound.Play();
         }
 
+        /* ------------------------------------------------------------------------- */
+        // Sonido 3
+        /* ------------------------------------------------------------------------- */
         private void BtnSound3_Click(object sender, EventArgs e)
         {
             CurrentSound = new SoundPlayer(@"C:\Dev\learning-csharp\PE24A_RRDE\PE24A_RRDE\Resources\Soundboard\HeyKitty.wav");
             CurrentSound.Play();
         }
 
+        /* ------------------------------------------------------------------------- */
+        // Sonido 4
+        /* ------------------------------------------------------------------------- */
         private void BtnSound4_Click(object sender, EventArgs e)
         {
             CurrentSound = new SoundPlayer(@"C:\Dev\learning-csharp\PE24A_RRDE\PE24A_RRDE\Resources\Soundboard\DonPolloWaiwaiwai.wav");
             CurrentSound.Play();
         }
 
+        /* ------------------------------------------------------------------------- */
+        // Sonido 5
+        /* ------------------------------------------------------------------------- */
         private void BtnSound5_Click(object sender, EventArgs e)
         {
             CurrentSound = new SoundPlayer(@"C:\Dev\learning-csharp\PE24A_RRDE\PE24A_RRDE\Resources\Soundboard\DonPolloUnVideoMas.wav");
             CurrentSound.Play();
         }
 
+        /* ------------------------------------------------------------------------- */
+        // Sonido 6
+        /* ------------------------------------------------------------------------- */
         private void BtnSound6_Click(object sender, EventArgs e)
         {
             CurrentSound = new SoundPlayer(@"C:\Dev\learning-csharp\PE24A_RRDE\PE24A_RRDE\Resources\Soundboard\DonPolloSalamaleco.wav");
             CurrentSound.Play();
         }
 
+        /* ------------------------------------------------------------------------- */
+        // Sonido 7
+        /* ------------------------------------------------------------------------- */
         private void BtnSound7_Click(object sender, EventArgs e)
         {
             CurrentSound = new SoundPlayer(@"C:\Dev\learning-csharp\PE24A_RRDE\PE24A_RRDE\Resources\Soundboard\DonPolloPlinPlam.wav");
             CurrentSound.Play();
         }
 
+        /* ------------------------------------------------------------------------- */
+        // Sonido 8
+        /* ------------------------------------------------------------------------- */
         private void BtnSound8_Click(object sender, EventArgs e)
         {
             CurrentSound = new SoundPlayer(@"C:\Dev\learning-csharp\PE24A_RRDE\PE24A_RRDE\Resources\Soundboard\DonPolloMmmm.wav");
             CurrentSound.Play();
         }
 
+        /* ------------------------------------------------------------------------- */
+        // Sonido 9
+        /* ------------------------------------------------------------------------- */
         private void BtnSound9_Click(object sender, EventArgs e)
         {
             CurrentSound = new SoundPlayer(@"C:\Dev\learning-csharp\PE24A_RRDE\PE24A_RRDE\Resources\Soundboard\DonPolloMalaNoticia.wav");
             CurrentSound.Play();
         }
 
+        /* ------------------------------------------------------------------------- */
+        // Sonido 10
+        /* ------------------------------------------------------------------------- */
         private void BtnSound10_Click(object sender, EventArgs e)
         {
             CurrentSound = new SoundPlayer(@"C:\Dev\learning-csharp\PE24A_RRDE\PE24A_RRDE\Resources\Soundboard\DonPolloFak.wav");
             CurrentSound.Play();
         }
 
+        /* ------------------------------------------------------------------------- */
+        // Sonido 11
+        /* ------------------------------------------------------------------------- */
         private void BtnSound11_Click(object sender, EventArgs e)
         {
             CurrentSound = new SoundPlayer(@"C:\Dev\learning-csharp\PE24A_RRDE\PE24A_RRDE\Resources\Soundboard\DondeEstaElTitanSpeackerman.wav");
             CurrentSound.Play();
         }
 
+        /* ------------------------------------------------------------------------- */
+        // Sonido 12
+        /* ------------------------------------------------------------------------- */
         private void BtnSound12_Click(object sender, EventArgs e)
         {
             CurrentSound = new SoundPlayer(@"C:\Dev\learning-csharp\PE24A_RRDE\PE24A_RRDE\Resources\Soundboard\DondeDiceEsaMmada.wav");
             CurrentSound.Play();
         }
 
+        /* ------------------------------------------------------------------------- */
+        // Sonido 13
+        /* ------------------------------------------------------------------------- */
+        private void BtnSound13_Click(object sender, EventArgs e)
+        {
+            CurrentSound = new SoundPlayer(@"C:\Dev\learning-csharp\PE24A_RRDE\PE24A_RRDE\Resources\Soundboard\CapitanTorta.wav");
+            CurrentSound.Play();
+        }
+
+        /* ------------------------------------------------------------------------- */
+        // Sonido 14
+        /* ------------------------------------------------------------------------- */
+        private void BtnSound14_Click(object sender, EventArgs e)
+        {
+            CurrentSound = new SoundPlayer(@"C:\Dev\learning-csharp\PE24A_RRDE\PE24A_RRDE\Resources\Soundboard\Delta1.wav");
+            CurrentSound.Play();
+        }
+
+        /* ------------------------------------------------------------------------- */
+        // Sonido 15
+        /* ------------------------------------------------------------------------- */
+        private void BtnSound15_Click(object sender, EventArgs e)
+        {
+            CurrentSound = new SoundPlayer(@"C:\Dev\learning-csharp\PE24A_RRDE\PE24A_RRDE\Resources\Soundboard\ElZapato.wav");
+            CurrentSound.Play();
+        }
+
+        /* ------------------------------------------------------------------------- */
+        // Sonido 16
+        /* ------------------------------------------------------------------------- */
+        private void BtnSound16_Click(object sender, EventArgs e)
+        {
+            CurrentSound = new SoundPlayer(@"C:\Dev\learning-csharp\PE24A_RRDE\PE24A_RRDE\Resources\Soundboard\DonPolloAsorry.wav");
+            CurrentSound.Play();
+        }
+
+        /* ------------------------------------------------------------------------- */
+        // Detener sonido
+        /* ------------------------------------------------------------------------- */
         private void BtnStop_Click(object sender, EventArgs e)
         {
             CurrentSound.Stop();
