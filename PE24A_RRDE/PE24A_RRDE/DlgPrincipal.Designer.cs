@@ -77,9 +77,9 @@
             this.BtnSecret.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(66)))), ((int)(((byte)(255)))));
             this.BtnSecret.Location = new System.Drawing.Point(12, 15);
             this.BtnSecret.Name = "BtnSecret";
-            this.BtnSecret.Size = new System.Drawing.Size(148, 73);
+            this.BtnSecret.Size = new System.Drawing.Size(190, 73);
             this.BtnSecret.TabIndex = 17;
-            this.BtnSecret.Text = "Yowaimo";
+            this.BtnSecret.Text = "Soundboard";
             this.BtnSecret.UseVisualStyleBackColor = false;
             this.BtnSecret.Click += new System.EventHandler(this.BtnSecret_Click);
             // 

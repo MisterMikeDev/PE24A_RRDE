@@ -58,6 +58,12 @@
     <Compile Include="DlgMesaPracticas2.Designer.cs">
       <DependentUpon>DlgMesaPracticas2.cs</DependentUpon>
     </Compile>
+    <Compile Include="DlgMesaSoundboard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DlgMesaSoundboard.Designer.cs">
+      <DependentUpon>DlgMesaSoundboard.cs</DependentUpon>
+    </Compile>
     <Compile Include="DlgPrincipal.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -71,6 +77,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DlgMesaPracticas2.resx">
       <DependentUpon>DlgMesaPracticas2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DlgMesaSoundboard.resx">
+      <DependentUpon>DlgMesaSoundboard.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DlgPrincipal.resx">
       <DependentUpon>DlgPrincipal.cs</DependentUpon>
@@ -99,12 +108,12 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\bgSoundboard.png" />
     <None Include="Resources\Battery.png" />
     <Content Include="Resources\bg.png" />
     <None Include="Resources\bgPractica2.jpg" />
     <None Include="Resources\wifi.png" />
     <None Include="Resources\Spotify.png" />
-    <Content Include="Resources\yowaimo.wav" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\favicon %281%29.png" />

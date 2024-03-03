@@ -117,9 +117,8 @@ namespace PE24A_RRDE
         }
 
         /* ------------------------------------------------------------------------- */
-        // Botón de Activar tabla Practica 2
+        // Función que se ejecuta al cargar el formulario
         /* ------------------------------------------------------------------------- */
-
         private void CreateCeills()
         {
             /* ------------------------------------------------------------------------- */
@@ -165,7 +164,7 @@ namespace PE24A_RRDE
             for (int r = 1; r <= NumColumna; r++)
             {
                 DgvTabla2.Rows.Add();
-               
+
                 for (int c = 0; c < NumColumna; c++)
                 {
                     /* ------------------------------------------------------------------------- */
@@ -173,8 +172,43 @@ namespace PE24A_RRDE
                     /* ------------------------------------------------------------------------- */
                     DgvTabla2.Rows[r - 1].Cells[c].Value = $"{random.Next() % 10}";
                 }
-            }           }
+            }
+        }
 
+        /* ------------------------------------------------------------------------- */
+        // Función que comprueba si todas las celdas de la tabla son rojas
+        /* ------------------------------------------------------------------------- */
+        private void CheckIfAllTableIsRed ()
+        {
+            /* ------------------------------------------------------------------------- */
+            // Variables
+            /* ------------------------------------------------------------------------- */
+            int RowCount = DgvTabla2.RowCount,
+                ColCount = DgvTabla2.ColumnCount,
+                RedCount = 0;
+
+            /* ------------------------------------------------------------------------- */
+            // Itera sobre todas las celdas de la tabla
+            /* ------------------------------------------------------------------------- */
+            for (int i = 0; i < RowCount; i++)
+            {
+                for (int j = 0; j < ColCount; j++)
+                {
+                    if (DgvTabla2.Rows[i].Cells[j].Style.BackColor == Color.Red)
+                    {
+                        RedCount++;
+                    }
+                }
+            }
+
+            /* ------------------------------------------------------------------------- */
+            // En caso de que todas las celdas sean rojas muestra un mensaje
+            /* ------------------------------------------------------------------------- */
+            if (RedCount == RowCount * ColCount)
+            {
+                MessageBox.Show("Todas las celdas son rojas");
+            }   
+        }
         private void BtnP2Activar_Click(object sender, EventArgs e)
         {
             /* ------------------------------------------------------------------------- */
@@ -389,6 +423,11 @@ namespace PE24A_RRDE
             TextBoxSalida2.BackColor = Color.Yellow;
             TextBoxSalida3.BackColor = Color.LightGreen;
             TextBoxSalida6.BackColor = Color.Red;
+
+            /* ------------------------------------------------------------------------- */
+            // Comprueba si todas las celdas de la tabla son rojas
+            /* ------------------------------------------------------------------------- */
+            CheckIfAllTableIsRed();
         }
 
         private void BtnP2Diagonal_Click(object sender, EventArgs e)

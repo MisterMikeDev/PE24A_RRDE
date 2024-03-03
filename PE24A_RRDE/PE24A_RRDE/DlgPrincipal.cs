@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Media;
-using System.Security.AccessControl;
 using System.Windows.Forms;
 
 namespace PE24A_RRDE
@@ -165,7 +163,7 @@ namespace PE24A_RRDE
         {
             DlgMesaPracticas1 dlgMesaParcticas1 = new DlgMesaPracticas1();
 
-            dlgMesaParcticas1.Show();
+            dlgMesaParcticas1.ShowDialog();
         }
 
         /* ------------------------------------------------------------------------- */
@@ -174,7 +172,7 @@ namespace PE24A_RRDE
         private void BtnMesaPracticas2_Click(object sender, EventArgs e)
         {
             DlgMesaPracticas2 dlgMesaPracticas2 = new DlgMesaPracticas2();
-            dlgMesaPracticas2.Show();
+            dlgMesaPracticas2.ShowDialog();
         }
 
         /* ------------------------------------------------------------------------- */
@@ -182,7 +180,7 @@ namespace PE24A_RRDE
         /* ------------------------------------------------------------------------- */
         private void BtnMesaPracticas3_Click(object sender, EventArgs e)
         {
-
+            MessageBox.Show("Próximamente...");
         }
 
         /* ------------------------------------------------------------------------- */
@@ -190,7 +188,7 @@ namespace PE24A_RRDE
         /* ------------------------------------------------------------------------- */
         private void BtnMesaPracticas4_Click(object sender, EventArgs e)
         {
-
+            MessageBox.Show("Próximamente...");
         }
 
         /* ------------------------------------------------------------------------- */
@@ -198,7 +196,7 @@ namespace PE24A_RRDE
         /* ------------------------------------------------------------------------- */
         private void BtnMesaPracticas5_Click(object sender, EventArgs e)
         {
-
+            MessageBox.Show("Próximamente...");
         }
 
         /* ------------------------------------------------------------------------- */
@@ -206,24 +204,21 @@ namespace PE24A_RRDE
         /* ------------------------------------------------------------------------- */
         private void BtnMesaPracticas6_Click(object sender, EventArgs e)
         {
-
+            MessageBox.Show("Próximamente...");
         }
 
         /* ------------------------------------------------------------------------- */
         // Metodos inecesarios (de momento)
         /* ------------------------------------------------------------------------- */
-        private void DlgPrincipal_Load(object sender, EventArgs e)
-        {
-
-        }
+        private void DlgPrincipal_Load(object sender, EventArgs e) {}
 
         /* ------------------------------------------------------------------------- */
-        // Yowaimo
+        // Soundboard
         /* ------------------------------------------------------------------------- */
         private void BtnSecret_Click(object sender, EventArgs e)
         {
-            SoundPlayer yowaimo = new SoundPlayer(@"C:\Dev\learning-csharp\PE24A_RRDE\PE24A_RRDE\Resources\yowaimo.wav");
-            yowaimo.Play();
+            DlgMesaSoundboard dlgMesaSoundboard = new DlgMesaSoundboard();
+            dlgMesaSoundboard.ShowDialog();
         }
     }
 }
