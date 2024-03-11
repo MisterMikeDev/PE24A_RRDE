@@ -10,17 +10,28 @@ namespace PE24A_RRDE
     public partial class DlgPrincipal : Form
     {
         /* ------------------------------------------------------------------------- */
+        // Atributos
+        /* ------------------------------------------------------------------------- */
+        string word = "";
+
+        /* ------------------------------------------------------------------------- */
         // Constructor
         /* ------------------------------------------------------------------------- */
         public DlgPrincipal()
         {
             InitializeComponent();
+            this.KeyPreview = true;
 
             /* ------------------------------------------------------------------------- */
             // Se actualiza la posicion de todos los componentes al momento de iniciar
             // el componente principal
             /* ------------------------------------------------------------------------- */
             DlgPrincipal_Resize(null, null);
+
+            /* ------------------------------------------------------------------------- */
+            // Se crea un evento para cuando se precione una tecla
+            /* ------------------------------------------------------------------------- */
+            KeyDown += new KeyEventHandler(DlgPrincipal_KeyPress);
         }
 
         /* ------------------------------------------------------------------------- */
@@ -102,7 +113,7 @@ namespace PE24A_RRDE
                 /* ------------------------------------------------------------------------- */
                 // Se baja la altura donde se ponen los siguientes tres botones
                 /* ------------------------------------------------------------------------- */
-                Top = ((Window[1] - Btn1[1]) / 2) + Btn1[1];
+                Top = ((Window[1] - Btn1[1]) / 2) + Btn1[1] + 20;
 
                 /* ------------------------------------------------------------------------- */
                 // Se posicionan los tres primeros botones tanto en x como en y
@@ -163,7 +174,7 @@ namespace PE24A_RRDE
         {
             DlgMesaPracticas1 dlgMesaParcticas1 = new DlgMesaPracticas1();
 
-            dlgMesaParcticas1.ShowDialog();
+            dlgMesaParcticas1.Show();
         }
 
         /* ------------------------------------------------------------------------- */
@@ -172,7 +183,7 @@ namespace PE24A_RRDE
         private void BtnMesaPracticas2_Click(object sender, EventArgs e)
         {
             DlgMesaPracticas2 dlgMesaPracticas2 = new DlgMesaPracticas2();
-            dlgMesaPracticas2.ShowDialog();
+            dlgMesaPracticas2.Show();
         }
 
         /* ------------------------------------------------------------------------- */
@@ -218,7 +229,27 @@ namespace PE24A_RRDE
         private void BtnSecret_Click(object sender, EventArgs e)
         {
             DlgMesaSoundboard dlgMesaSoundboard = new DlgMesaSoundboard();
-            dlgMesaSoundboard.ShowDialog();
+            dlgMesaSoundboard.Show();
+        }
+
+        /* ------------------------------------------------------------------------- */
+        // KeyDown Event Listener
+        /* ------------------------------------------------------------------------- */
+        private void DlgPrincipal_KeyPress(object sender, KeyEventArgs e)
+        {
+            int keyCode = e.KeyValue;
+            string keyValue = $"{e.KeyCode}";
+
+            if (keyCode == 68 || keyCode == 69 || keyCode == 86) word += keyValue;
+            if (keyCode == 8) word = "";
+            if (word == "DEV") OpenSecret();
+        }
+
+        private void OpenSecret()
+        {
+            word = "";
+            DlgSecret dglSecret = new DlgSecret();
+            dglSecret.Show();
         }
     }
 }

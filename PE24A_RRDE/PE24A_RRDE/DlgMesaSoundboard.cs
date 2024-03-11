@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
 using System.Media;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace PE24A_RRDE
@@ -294,6 +288,8 @@ namespace PE24A_RRDE
         /* ------------------------------------------------------------------------- */
         private void BtnStop_Click(object sender, EventArgs e)
         {
+
+            if (CurrentSound == null) return;
             CurrentSound.Stop();
             CurrentSound = null;
         }

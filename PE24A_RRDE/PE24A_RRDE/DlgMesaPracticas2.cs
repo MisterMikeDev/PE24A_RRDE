@@ -25,13 +25,16 @@ namespace PE24A_RRDE
             // Actualizar la hora cada segundo
             /* ------------------------------------------------------------------------- */
             SetTimeout(SetCurrentTime, 500);
-
+             
             /* ------------------------------------------------------------------------- */
             // Centrar los componentes en la ventana
             /* ------------------------------------------------------------------------- */
             DlgMesaPracticas2_Resize(null, null);
         }
 
+        /* ------------------------------------------------------------------------- */
+        // Setea la hora actual
+        /* ------------------------------------------------------------------------- */
         private void SetCurrentTime()
         {
             /* ------------------------------------------------------------------------- */
@@ -42,7 +45,10 @@ namespace PE24A_RRDE
             LblCurrentDate.Text = CurrentDate.ToString("dddd, dd 'de' MMMM");
         }
 
-        public void SetTimeout(Action action, int timeout)
+        /* ------------------------------------------------------------------------- */
+        // Crea el intervalo con una custom action
+        /* ------------------------------------------------------------------------- */
+        private void SetTimeout(Action action, int timeout)
         {
             /* ------------------------------------------------------------------------- */
             // Actualizar la hora cada segundo

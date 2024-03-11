@@ -40,3 +40,7 @@ En esta materia estamos creando multiples proyectos los cuales se irán agregand
 9. Cálculo y sumatorias.
 10. Creación de elementos de manera dinámica.
 11. Posicionamiento de elementos con matematicas.
+12. Creacion de eventos.
+13. Redimensionamiento de elementos.
+14. Uso de audios.
+15. Eventos de teclado.
