@@ -25,6 +25,11 @@ namespace PE24A_RRDE
             InitializeComponent();
 
             /* ------------------------------------------------------------------------- */
+            // Configuración de la ventana
+            /* ------------------------------------------------------------------------- */
+            this.MinimumSize = new System.Drawing.Size(600, 400);
+
+            /* ------------------------------------------------------------------------- */
             // Limpia el intervalo si es que estaba activo
             /* ------------------------------------------------------------------------- */
             ClearInterval();
@@ -143,6 +148,26 @@ namespace PE24A_RRDE
             int NumColumna = DgvTabla2.ColumnCount;
             bool isNumber;
             Random random = new Random();
+
+            /* ------------------------------------------------------------------------- */
+            // Resetea el valor de los inputs
+            /* ------------------------------------------------------------------------- */
+            TextBoxSalida1.Text = "";
+            TextBoxSalida2.Text = "";
+            TextBoxSalida3.Text = "";
+            TextBoxSalida4.Text = "";
+            TextBoxSalida5.Text = "";
+            TextBoxSalida6.Text = "";
+
+            /* ------------------------------------------------------------------------- */
+            // Resetea el color de los inputs
+            /* ------------------------------------------------------------------------- */
+            TextBoxSalida1.BackColor = Color.White;
+            TextBoxSalida2.BackColor = Color.White;
+            TextBoxSalida3.BackColor = Color.White;
+            TextBoxSalida4.BackColor = Color.White;
+            TextBoxSalida5.BackColor = Color.White;
+            TextBoxSalida6.BackColor = Color.White;
 
             /* ------------------------------------------------------------------------- */
             // Validaciones

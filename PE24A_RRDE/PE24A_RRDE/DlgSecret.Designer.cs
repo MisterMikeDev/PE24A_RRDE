@@ -29,7 +29,18 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DlgSecret));
+            this.PnlCanvas = new System.Windows.Forms.Panel();
             this.SuspendLayout();
+            // 
+            // PnlCanvas
+            // 
+            this.PnlCanvas.BackColor = System.Drawing.Color.White;
+            this.PnlCanvas.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.PnlCanvas.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.PnlCanvas.Location = new System.Drawing.Point(0, 0);
+            this.PnlCanvas.Name = "PnlCanvas";
+            this.PnlCanvas.Size = new System.Drawing.Size(1484, 808);
+            this.PnlCanvas.TabIndex = 0;
             // 
             // DlgSecret
             // 
@@ -37,13 +48,19 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(111)))), ((int)(((byte)(9)))), ((int)(((byte)(255)))));
             this.ClientSize = new System.Drawing.Size(1484, 808);
+            this.Controls.Add(this.PnlCanvas);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "DlgSecret";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "PE Secret";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.Resize += new System.EventHandler(this.DlgSecret_Resize);
             this.ResumeLayout(false);
 
         }
 
         #endregion
+
+        private System.Windows.Forms.Panel PnlCanvas;
     }
 }

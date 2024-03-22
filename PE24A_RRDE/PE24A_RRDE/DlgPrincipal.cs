@@ -20,6 +20,25 @@ namespace PE24A_RRDE
         public DlgPrincipal()
         {
             InitializeComponent();
+
+            /* ------------------------------------------------------------------------- */
+            // Configuración de la ventana
+            /* ------------------------------------------------------------------------- */
+            this.MinimumSize = new System.Drawing.Size(600, 400);
+
+            /* ------------------------------------------------------------------------- */
+            // Creación de un arreglo de botones para poder iterar sobre ellos
+            /* ------------------------------------------------------------------------- */
+            Button[] buttons = {
+                BtnMesaPracticas1,
+                BtnMesaPracticas2,
+                BtnMesaPracticas3,
+                BtnMesaPracticas4,
+                BtnMesaPracticas5,
+                BtnMesaPracticas6,
+                BtnSecret
+            };
+
             this.KeyPreview = true;
 
             /* ------------------------------------------------------------------------- */
@@ -32,6 +51,33 @@ namespace PE24A_RRDE
             // Se crea un evento para cuando se precione una tecla
             /* ------------------------------------------------------------------------- */
             KeyDown += new KeyEventHandler(DlgPrincipal_KeyPress);
+
+            /* ------------------------------------------------------------------------- */
+            // Se recorren todos los botones para poder agregarles un evento hover
+            /* ------------------------------------------------------------------------- */
+            foreach (Button button in buttons)
+            {
+                button.MouseEnter += new EventHandler(BtnMesaPracticas_MouseEnter);
+                button.MouseLeave += new EventHandler(BtnMesaPracticas_MouseLeave);
+            }
+        }
+
+        /* ------------------------------------------------------------------------- */
+        // Hover Event Listener
+        /* ------------------------------------------------------------------------- */
+        private void BtnMesaPracticas_MouseLeave(object sender, EventArgs e)
+        {
+            Button button = (Button)sender;
+            button.BackColor = System.Drawing.Color.FromArgb(111, 66, 255);
+        }
+
+        /* ------------------------------------------------------------------------- */
+        // Hover Event Listener
+        /* ------------------------------------------------------------------------- */
+        private void BtnMesaPracticas_MouseEnter(object sender, EventArgs e)
+        {
+            Button button = (Button)sender;
+            button.BackColor = System.Drawing.Color.FromArgb(88, 52, 204);
         }
 
         /* ------------------------------------------------------------------------- */
@@ -245,6 +291,9 @@ namespace PE24A_RRDE
             if (word == "DEV") OpenSecret();
         }
 
+        /* ------------------------------------------------------------------------- */
+        // Open Secret
+        /* ------------------------------------------------------------------------- */
         private void OpenSecret()
         {
             word = "";

@@ -22,10 +22,27 @@ En este repositorio iré subiendo los avances de las tareas y proyectos que se r
 
 En esta materia estamos creando multiples proyectos los cuales se irán agregando a las diferentes mesas de trabajo.
 
-- **Actualmente:** Creando la mesa de trabajo 2 por la practica 1.
+- **Actualmente:** Creando la mesa de trabajo 2 por la practica 2.
 
 ![Demo image](/public/DemoMesa1.png)
+
+---
+
 ![Demo image](/public/DemoMesa2.png)
+
+---
+
+![Demo image](/public/DemoMesa2-Canvas.png)
+
+---
+
+![Demo image](/public/DemoMesa2-Squares.png)
+
+---
+
+![Demo image](/public/DemoMesaSecret.png)
+
+---
 
 ## Habilidades aprendidas:
 
@@ -44,3 +61,13 @@ En esta materia estamos creando multiples proyectos los cuales se irán agregand
 13. Redimensionamiento de elementos.
 14. Uso de audios.
 15. Eventos de teclado.
+16. Uso de imagenes.
+17. Dibujo de colores y figuras.
+18. Uso de temporizadores.
+19. Dibujos de figuras geometricas con matematicas.
+20. Uso de funciones trigonometricas.
+21. Uso de funciones matematicas.
+22. Reutilización de código con funciones.
+23. Colores RGB, HEX y ARGB.
+24. Eventos de ratón (mouseHover, mouseClick, mouseDown, mouseUp, mouseMove).
+25. Colisiones de elementos.
