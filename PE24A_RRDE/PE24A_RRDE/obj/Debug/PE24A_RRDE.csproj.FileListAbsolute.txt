@@ -12,3 +12,4 @@ C:\Dev\learning-csharp\PE24A_RRDE\PE24A_RRDE\obj\Debug\PE24A_RRDE.DlgMesaPractic
 C:\Dev\learning-csharp\PE24A_RRDE\PE24A_RRDE\obj\Debug\PE24A_RRDE.DlgMesaPracticas1.resources
 C:\Dev\learning-csharp\PE24A_RRDE\PE24A_RRDE\obj\Debug\PE24A_RRDE.DlgMesaSoundboard.resources
 C:\Dev\learning-csharp\PE24A_RRDE\PE24A_RRDE\obj\Debug\PE24A_RRDE.DlgSecret.resources
+C:\Dev\learning-csharp\PE24A_RRDE\PE24A_RRDE\obj\Debug\PE24A_RRDE.DlgMesaPracticas3.resources

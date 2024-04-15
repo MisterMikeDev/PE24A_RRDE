@@ -30,6 +30,10 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DlgMesaSoundboard));
             this.PnlCentral = new System.Windows.Forms.Panel();
+            this.BtnSound16 = new System.Windows.Forms.Button();
+            this.BtnSound15 = new System.Windows.Forms.Button();
+            this.BtnSound14 = new System.Windows.Forms.Button();
+            this.BtnSound13 = new System.Windows.Forms.Button();
             this.BtnStop = new System.Windows.Forms.Button();
             this.BtnSound12 = new System.Windows.Forms.Button();
             this.BtnSound11 = new System.Windows.Forms.Button();
@@ -44,10 +48,6 @@
             this.BtnSound2 = new System.Windows.Forms.Button();
             this.BtnSound1 = new System.Windows.Forms.Button();
             this.LblTitle = new System.Windows.Forms.Label();
-            this.BtnSound16 = new System.Windows.Forms.Button();
-            this.BtnSound15 = new System.Windows.Forms.Button();
-            this.BtnSound14 = new System.Windows.Forms.Button();
-            this.BtnSound13 = new System.Windows.Forms.Button();
             this.PnlCentral.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -79,6 +79,58 @@
             this.PnlCentral.Name = "PnlCentral";
             this.PnlCentral.Size = new System.Drawing.Size(1484, 808);
             this.PnlCentral.TabIndex = 0;
+            // 
+            // BtnSound16
+            // 
+            this.BtnSound16.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(112)))), ((int)(((byte)(202)))));
+            this.BtnSound16.Font = new System.Drawing.Font("Segoe UI Variable Display Semib", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnSound16.ForeColor = System.Drawing.Color.White;
+            this.BtnSound16.Location = new System.Drawing.Point(1025, 583);
+            this.BtnSound16.Name = "BtnSound16";
+            this.BtnSound16.Size = new System.Drawing.Size(228, 74);
+            this.BtnSound16.TabIndex = 17;
+            this.BtnSound16.Text = "Sound 16";
+            this.BtnSound16.UseVisualStyleBackColor = false;
+            this.BtnSound16.Click += new System.EventHandler(this.BtnSound16_Click);
+            // 
+            // BtnSound15
+            // 
+            this.BtnSound15.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(112)))), ((int)(((byte)(202)))));
+            this.BtnSound15.Font = new System.Drawing.Font("Segoe UI Variable Display Semib", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnSound15.ForeColor = System.Drawing.Color.White;
+            this.BtnSound15.Location = new System.Drawing.Point(755, 583);
+            this.BtnSound15.Name = "BtnSound15";
+            this.BtnSound15.Size = new System.Drawing.Size(228, 74);
+            this.BtnSound15.TabIndex = 16;
+            this.BtnSound15.Text = "Sound 15";
+            this.BtnSound15.UseVisualStyleBackColor = false;
+            this.BtnSound15.Click += new System.EventHandler(this.BtnSound15_Click);
+            // 
+            // BtnSound14
+            // 
+            this.BtnSound14.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(112)))), ((int)(((byte)(202)))));
+            this.BtnSound14.Font = new System.Drawing.Font("Segoe UI Variable Display Semib", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnSound14.ForeColor = System.Drawing.Color.White;
+            this.BtnSound14.Location = new System.Drawing.Point(476, 583);
+            this.BtnSound14.Name = "BtnSound14";
+            this.BtnSound14.Size = new System.Drawing.Size(228, 74);
+            this.BtnSound14.TabIndex = 15;
+            this.BtnSound14.Text = "Sound 14";
+            this.BtnSound14.UseVisualStyleBackColor = false;
+            this.BtnSound14.Click += new System.EventHandler(this.BtnSound14_Click);
+            // 
+            // BtnSound13
+            // 
+            this.BtnSound13.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(112)))), ((int)(((byte)(202)))));
+            this.BtnSound13.Font = new System.Drawing.Font("Segoe UI Variable Display Semib", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BtnSound13.ForeColor = System.Drawing.Color.White;
+            this.BtnSound13.Location = new System.Drawing.Point(205, 583);
+            this.BtnSound13.Name = "BtnSound13";
+            this.BtnSound13.Size = new System.Drawing.Size(228, 74);
+            this.BtnSound13.TabIndex = 14;
+            this.BtnSound13.Text = "Sound 13";
+            this.BtnSound13.UseVisualStyleBackColor = false;
+            this.BtnSound13.Click += new System.EventHandler(this.BtnSound13_Click);
             // 
             // BtnStop
             // 
@@ -261,58 +313,6 @@
             this.LblTitle.TabIndex = 0;
             this.LblTitle.Text = "Soundboard";
             // 
-            // BtnSound16
-            // 
-            this.BtnSound16.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(112)))), ((int)(((byte)(202)))));
-            this.BtnSound16.Font = new System.Drawing.Font("Segoe UI Variable Display Semib", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnSound16.ForeColor = System.Drawing.Color.White;
-            this.BtnSound16.Location = new System.Drawing.Point(1025, 583);
-            this.BtnSound16.Name = "BtnSound16";
-            this.BtnSound16.Size = new System.Drawing.Size(228, 74);
-            this.BtnSound16.TabIndex = 17;
-            this.BtnSound16.Text = "Sound 16";
-            this.BtnSound16.UseVisualStyleBackColor = false;
-            this.BtnSound16.Click += new System.EventHandler(this.BtnSound16_Click);
-            // 
-            // BtnSound15
-            // 
-            this.BtnSound15.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(112)))), ((int)(((byte)(202)))));
-            this.BtnSound15.Font = new System.Drawing.Font("Segoe UI Variable Display Semib", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnSound15.ForeColor = System.Drawing.Color.White;
-            this.BtnSound15.Location = new System.Drawing.Point(755, 583);
-            this.BtnSound15.Name = "BtnSound15";
-            this.BtnSound15.Size = new System.Drawing.Size(228, 74);
-            this.BtnSound15.TabIndex = 16;
-            this.BtnSound15.Text = "Sound 15";
-            this.BtnSound15.UseVisualStyleBackColor = false;
-            this.BtnSound15.Click += new System.EventHandler(this.BtnSound15_Click);
-            // 
-            // BtnSound14
-            // 
-            this.BtnSound14.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(112)))), ((int)(((byte)(202)))));
-            this.BtnSound14.Font = new System.Drawing.Font("Segoe UI Variable Display Semib", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnSound14.ForeColor = System.Drawing.Color.White;
-            this.BtnSound14.Location = new System.Drawing.Point(476, 583);
-            this.BtnSound14.Name = "BtnSound14";
-            this.BtnSound14.Size = new System.Drawing.Size(228, 74);
-            this.BtnSound14.TabIndex = 15;
-            this.BtnSound14.Text = "Sound 14";
-            this.BtnSound14.UseVisualStyleBackColor = false;
-            this.BtnSound14.Click += new System.EventHandler(this.BtnSound14_Click);
-            // 
-            // BtnSound13
-            // 
-            this.BtnSound13.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(112)))), ((int)(((byte)(202)))));
-            this.BtnSound13.Font = new System.Drawing.Font("Segoe UI Variable Display Semib", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BtnSound13.ForeColor = System.Drawing.Color.White;
-            this.BtnSound13.Location = new System.Drawing.Point(205, 583);
-            this.BtnSound13.Name = "BtnSound13";
-            this.BtnSound13.Size = new System.Drawing.Size(228, 74);
-            this.BtnSound13.TabIndex = 14;
-            this.BtnSound13.Text = "Sound 13";
-            this.BtnSound13.UseVisualStyleBackColor = false;
-            this.BtnSound13.Click += new System.EventHandler(this.BtnSound13_Click);
-            // 
             // DlgMesaSoundboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -321,7 +321,7 @@
             this.Controls.Add(this.PnlCentral);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "DlgMesaSoundboard";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Pe Soundboard";
             this.Resize += new System.EventHandler(this.DlgMesaSoundboard_Resize);
             this.PnlCentral.ResumeLayout(false);

@@ -103,6 +103,16 @@ namespace PE24A_RRDE.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap bgPractica3 {
+            get {
+                object obj = ResourceManager.GetObject("bgPractica3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap bgSoundboard {
             get {
                 object obj = ResourceManager.GetObject("bgSoundboard", resourceCulture);

@@ -216,7 +216,7 @@ namespace PE24A_RRDE
         /* ------------------------------------------------------------------------- */
         // Botón de activación de Mes de Prácticas 1
         /* ------------------------------------------------------------------------- */
-        private void BtnMesaPracticas1_Click_1(object sender, EventArgs e)
+        private void BtnMesaPracticas1_Click(object sender, EventArgs e)
         {
             DlgMesaPracticas1 dlgMesaParcticas1 = new DlgMesaPracticas1();
 
@@ -237,7 +237,8 @@ namespace PE24A_RRDE
         /* ------------------------------------------------------------------------- */
         private void BtnMesaPracticas3_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Próximamente...");
+            DlgMesaPracticas3 dlgMesaPracticas3 = new DlgMesaPracticas3();
+            dlgMesaPracticas3.Show();
         }
 
         /* ------------------------------------------------------------------------- */

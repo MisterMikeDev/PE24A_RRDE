@@ -33,6 +33,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1001\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -46,6 +50,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DlgMesaPracticas3.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DlgMesaPracticas3.Designer.cs">
+      <DependentUpon>DlgMesaPracticas3.cs</DependentUpon>
+    </Compile>
     <Compile Include="DlgMesaPracticas1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -84,6 +94,9 @@
     <EmbeddedResource Include="DlgMesaPracticas2.resx">
       <DependentUpon>DlgMesaPracticas2.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="DlgMesaPracticas3.resx">
+      <DependentUpon>DlgMesaPracticas3.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DlgMesaSoundboard.resx">
       <DependentUpon>DlgMesaSoundboard.cs</DependentUpon>
     </EmbeddedResource>
@@ -101,6 +114,7 @@
     <None Include="..\.editorconfig">
       <Link>.editorconfig</Link>
     </None>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -120,6 +134,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\bgPractica3.png" />
     <None Include="Resources\bgSoundboard.png" />
     <None Include="Resources\Battery.png" />
     <Content Include="Resources\bg.png" />
