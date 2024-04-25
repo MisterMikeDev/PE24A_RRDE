@@ -284,6 +284,15 @@ namespace PE24A_RRDE
         /* ------------------------------------------------------------------------- */
         private void DlgPrincipal_KeyPress(object sender, KeyEventArgs e)
         {
+            if (e.KeyCode == Keys.D1) BtnMesaPracticas1_Click(null, null);
+            if (e.KeyCode == Keys.D2) BtnMesaPracticas2_Click(null, null);
+            if (e.KeyCode == Keys.D3) BtnMesaPracticas3_Click(null, null);
+            if (e.KeyCode == Keys.D4) BtnMesaPracticas4_Click(null, null);
+            if (e.KeyCode == Keys.D5) BtnMesaPracticas5_Click(null, null);
+            if (e.KeyCode == Keys.D6) BtnMesaPracticas6_Click(null, null);
+            if (e.KeyCode == Keys.D1 || e.KeyCode == Keys.D2 || e.KeyCode == Keys.D3 || e.KeyCode == Keys.D4 || e.KeyCode == Keys.D5 || e.KeyCode == Keys.D6) return;
+
+            if (word.Length > 2) word = "";
             int keyCode = e.KeyValue;
             string keyValue = $"{e.KeyCode}";
 

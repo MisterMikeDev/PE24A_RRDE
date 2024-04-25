@@ -20,7 +20,12 @@ namespace PE24A_RRDE
         /* ------------------------------------------------------------------------- */
         // Atributos
         /* ------------------------------------------------------------------------- */
+        List<List<int>> ExcelData = new List<List<int>>();
         private bool isLoading = false;
+        private Point? draggingPoint = null;
+        private int draggingIndex = -1;
+        List<Point> points = new List<Point>();
+        Timer debouce = new Timer();
 
         /* ------------------------------------------------------------------------- */
         // Constructor
@@ -29,17 +34,43 @@ namespace PE24A_RRDE
         {
             InitializeComponent();
 
+            /* ------------------------------------------------------------------------- */
+            // Configuración de la ventana
+            /* ------------------------------------------------------------------------- */
+            this.MinimumSize = new System.Drawing.Size(600, 400);
+
+            /* ------------------------------------------------------------------------- */
+            // Estilizar la tabla
+            /* ------------------------------------------------------------------------- */
             StylingTable();
 
+            /* ------------------------------------------------------------------------- */
+            // Evento de cambio de tamaño
+            /* ------------------------------------------------------------------------- */
             DlgMesaPracticas3_Resize(null, null);
+
+            /* ------------------------------------------------------------------------- */
+            // Eventos para el canvas
+            /* ------------------------------------------------------------------------- */
+            PnlCanvas.MouseDown += new MouseEventHandler(PnlCanvas_MouseDown);
+            PnlCanvas.MouseMove += new MouseEventHandler(PnlCanvas_MouseMove);
+            PnlCanvas.MouseUp += new MouseEventHandler(PnlCanvas_MouseUp);
+
+            /* ------------------------------------------------------------------------- */
+            // Debounce para el evento MouseMove
+            /* ------------------------------------------------------------------------- */
+            debouce.Interval = 10;
+            debouce.Tick += new EventHandler((sender, e) =>
+            {
+                DrawVectors();
+                debouce.Stop();
+            });
         }
 
         /* ------------------------------------------------------------------------- */
         // Evento de cambio de tamaño
         /* ------------------------------------------------------------------------- */
-        private void DlgMesaPracticas3_Resize(object sender, EventArgs e)
-        {
-        }
+        private void DlgMesaPracticas3_Resize(object sender, EventArgs e) { }
 
         /* ------------------------------------------------------------------------- */
         // Mostrar el canvas
@@ -54,22 +85,34 @@ namespace PE24A_RRDE
         /* ------------------------------------------------------------------------- */
         private void BtnImport_Click(object sender, EventArgs e)
         {
+            PnlCanvas.Visible = true;
 
             string Path = "C:\\Dev\\learning-csharp\\PE24A_RRDE\\PE24A_RRDE\\Resources\\Data\\Vectors.xlsx";
-            int[][] ExcelData = ReadExcel(Path);
+
+            List<List<int>> ExcelData = ReadExcel(Path);
 
             WriteExcelToTable(ExcelData);
+
             DrawVectors();
 
         }
 
         /* ------------------------------------------------------------------------- */
+        // Boton que dibuja o redibuja las coords de los puntos en el canvas
+        /* ------------------------------------------------------------------------- */
+        private void BtnDraw_Click(object sender, EventArgs e)
+        {
+            DrawVectors();
+        }
+
+        /* ------------------------------------------------------------------------- */
         // Leer el contenido del Excel
         /* ------------------------------------------------------------------------- */
-        private int[][] ReadExcel(string ExcelPath)
+        private List<List<int>> ReadExcel(string ExcelPath)
         {
-            isLoading = true;
-            CheckIsLoading();
+            CheckIsLoading(true);
+
+            if (ExcelData.Count != 0) ExcelData.Clear();
 
             Excel.Application xlsxApp = new Excel.Application();
             Excel.Workbook xlsxWorkbook = xlsxApp.Workbooks.Open(ExcelPath);
@@ -78,38 +121,37 @@ namespace PE24A_RRDE
 
             int rowCount = xlsxRange.Rows.Count,
                 colCount = xlsxRange.Columns.Count;
-            int[] ExcelCellDataRaw = new int[colCount * rowCount - (colCount + rowCount - 2) - 1];
-            int[][] ExcelCellData = new int[ExcelCellDataRaw.Length / 2][];
 
             for (int i = 2; i <= rowCount; i++)
             {
+                List<int> row = new List<int>();
+
                 for (int j = 2; j <= colCount; j++)
                 {
-                    int cellValue = (xlsxRange.Cells[i, j] as Excel.Range).Value2 != null ?
-                        (int)(xlsxRange.Cells[i, j] as Excel.Range).Value2 : 0;
+                    int cellValue = (xlsxRange.Cells[i, j] as Excel.Range).Value2 != null
+                         ? Convert.ToInt32((xlsxRange.Cells[i, j] as Excel.Range).Value2)
+                         : 0;
 
-                    ExcelCellDataRaw[(i - 2) * (colCount - 1) + (j - 2)] = cellValue;
+                    row.Add(cellValue);
                 }
-            }
 
-            for (int i = 0; i < ExcelCellDataRaw.Length; i += 2)
-            {
-                ExcelCellData[i / 2] = new int[] { ExcelCellDataRaw[i], ExcelCellDataRaw[i + 1] };
+                ExcelData.Add(row);
             }
 
             xlsxWorkbook.Close();
             xlsxApp.Quit();
 
-            isLoading = false;
-            CheckIsLoading();
+            CheckIsLoading(false);
 
-            return ExcelCellData;
+            MessageBox.Show("Datos importados correctamente", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            return ExcelData;
         }
 
         /* ------------------------------------------------------------------------- */
         // Escribir el contenido del Excel en la tabla
         /* ------------------------------------------------------------------------- */
-        private void WriteExcelToTable(int[][] ExcelData)
+        private void WriteExcelToTable(List<List<int>> ExcelData)
         {
             DgvVectors.Rows.Clear();
             DgvVectors.Columns.Clear();
@@ -118,9 +160,16 @@ namespace PE24A_RRDE
             DgvVectors.Columns.Add("x", "X");
             DgvVectors.Columns.Add("y", "Y");
 
-            for (int i = 0; i < ExcelData.Length; i++)
+            for (int i = 0; i < ExcelData.Count; i++)
             {
-                DgvVectors.Rows.Add($"v{i + 1}", ExcelData[i][0], ExcelData[i][1]);
+                List<int> vectorPair = ExcelData[i];
+
+                string vectorName = $"v{i + 1}";
+
+                int x = vectorPair[0];
+                int y = vectorPair[1];
+
+                DgvVectors.Rows.Add(vectorName, x, y);
             }
         }
 
@@ -129,55 +178,138 @@ namespace PE24A_RRDE
         /* ------------------------------------------------------------------------- */
         private void DrawVectors()
         {
-            Console.WriteLine($"${PnlCanvas.Width} {PnlCanvas.Height}");
+            points.Clear();
+
+            if (ExcelData.Count < 1 || ExcelData == null)
+            {
+                MessageBox.Show("No hay datos para mostrar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             Random random = new Random();
             Graphics g = PnlCanvas.CreateGraphics();
+            Pen pen = new Pen(Color.Black, 2);
             
+            g.Clear(PnlCanvas.BackColor);
 
-            int x0 = PnlCanvas.Width / 2,
-                y0 = PnlCanvas.Height / 2;
+            int W = PnlCanvas.Width,
+                H = PnlCanvas.Height,
+                scale = 4;
 
-            int x = x0,
-                y = y0;
+            if (ExcelData.Count == 0) return;
 
-            for (int i = 0; i < DgvVectors.Rows.Count; i++)
+            for (int i = 0; i < ExcelData.Count; i++)
             {
-                Pen pen = new Pen(
-                   Color.FromArgb(random.Next(0, 255), random.Next(0, 255), random.Next(0, 255)),
-                   4
+                List<int> vectorPair = ExcelData[i];
+                int x = vectorPair[0] * scale,
+                    y = vectorPair[1] * scale;
+
+                x = Math.Max(0, Math.Min(x, W));
+                y = Math.Max(0, Math.Min(y, H));
+
+                points.Add(new Point(x, y));
+
+                int nextX = i + 1 < ExcelData.Count ? ExcelData[i + 1][0] * scale : ExcelData[0][0] * scale,
+                    nextY = i + 1 < ExcelData.Count ? ExcelData[i + 1][1] * scale : ExcelData[0][1] * scale;
+
+                nextX = Math.Max(0, Math.Min(nextX, W));
+                nextY = Math.Max(0, Math.Min(nextY, H));
+
+                if (i == ExcelData.Count - 1) g.DrawLine(pen, x, y, ExcelData[0][0] * scale, ExcelData[0][1] * scale);
+                else g.DrawLine(pen, x, y, nextX, nextY);
+
+                g.FillEllipse(
+                    new SolidBrush(Color.Red),
+                    x - 5, y - 5, 10, 10
                 );
-
-                int x1 = x + (int)DgvVectors.Rows[i].Cells[1].Value,
-                    y1 = y - (int)DgvVectors.Rows[i].Cells[2].Value;
-
-                g.DrawLine(pen, x, y, x1, y1);
-
-                x = x1;
-                y = y1;
             }
-            x = x0;
-            y = y0;
         }
 
+        /* ------------------------------------------------------------------------- */
+        // Evento MouseDown para el canvas
+        /* ------------------------------------------------------------------------- */
+        private void PnlCanvas_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (isLoading) return;
+
+            int scale = 4,
+                radius = 10;
+
+            for (int i = 0; i < ExcelData.Count; i++)
+            {
+                int x = ExcelData[i][0] * scale,
+                    y = ExcelData[i][1] * scale;
+
+                if (Math.Pow(e.X - x, 2) + Math.Pow(e.Y - y, 2) <= Math.Pow(radius, 2))
+                {
+                    draggingPoint = new Point(x, y);
+                    draggingIndex = i;
+                    break;
+                }
+            }
+        }
+
+        /* ------------------------------------------------------------------------- */
+        // Evento MouseMove para el canvas
+        /* ------------------------------------------------------------------------- */
+        private void PnlCanvas_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (isLoading) return;
+
+            bool overPoint = points.Any(p => Math.Sqrt((p.X - e.X) * (p.X - e.X) + (p.Y - e.Y) * (p.Y - e.Y)) <= 10);
+            PnlCanvas.Cursor = overPoint ? Cursors.Hand : Cursors.Default;
+
+            if (draggingPoint.HasValue && e.Button == MouseButtons.Left)
+            {
+                int scale = 4,
+                    W = PnlCanvas.Width,
+                    H = PnlCanvas.Height,
+                    newX = Math.Max(0, Math.Min(e.X, W)) / scale,
+                    newY = Math.Max(0, Math.Min(e.Y, H)) / scale;
+
+                ExcelData[draggingIndex] = new List<int> { newX, newY };
+                draggingPoint = new Point(newX * scale, newY * scale);
+
+                DgvVectors.Rows[draggingIndex].Cells["x"].Value = newX;
+                DgvVectors.Rows[draggingIndex].Cells["y"].Value = newY;
+
+                debouce.Start();
+            }
+        }
+
+        /* ------------------------------------------------------------------------- */
+        // Evento MouseUp para el canvas
+        /* ------------------------------------------------------------------------- */
+        private void PnlCanvas_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (isLoading) return;
+
+            draggingPoint = null;
+            draggingIndex = -1;
+            DrawVectors();
+            debouce.Stop();
+        }
 
         /* ------------------------------------------------------------------------- */
         // Verificar si se está cargando
         /* ------------------------------------------------------------------------- */
-        private void CheckIsLoading()
+        private void CheckIsLoading(bool loading)
         {
+            isLoading = loading;
             if (isLoading)
             {
                 BtnImport.Enabled = false;
                 BtnShowCanvas.Enabled = false;
-                LblLoadingText.Visible = true;
-                LblLoadingText.Text = "Loading...";
+                BtnImport.Text = "Loading...";
+                BtnImport.BackColor = Color.FromArgb(162, 0, 255);
             }
             else
             {
                 BtnImport.Enabled = true;
                 BtnShowCanvas.Enabled = true;
-                LblLoadingText.Visible = false;
-                LblLoadingText.Text = "";
+                BtnImport.Text = "Importar";
+
+                BtnImport.BackColor = Color.FromArgb(0, 200, 0);
             }
         }
 
@@ -195,6 +327,13 @@ namespace PE24A_RRDE
             DgvVectors.RowHeadersWidth = 4;
             DgvVectors.RowTemplate.Height = 28;
             DgvVectors.TabIndex = 0;
+        }
+
+        private void TrackBarLineHeight_Scroll(object sender, EventArgs e)
+        {
+            int TrackBarValue = TrackBarLineHeight.Value;
+
+            LblLineSize.Text = $"{TrackBarValue}px";
         }
     }
 }
