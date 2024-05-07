@@ -22,7 +22,7 @@ En este repositorio iré subiendo los avances de las tareas y proyectos que se r
 
 En esta materia estamos creando multiples proyectos los cuales se irán agregando a las diferentes mesas de trabajo.
 
-- **Actualmente:** Creando la mesa de trabajo 2 por la practica 2.
+- **Actualmente:** Creando la mesa de trabajo 32 por la practica 1.
 
 ![Demo image](/public/DemoMesa1.png)
 
@@ -37,6 +37,10 @@ En esta materia estamos creando multiples proyectos los cuales se irán agregand
 ---
 
 ![Demo image](/public/DemoMesa2-Squares.png)
+
+---
+
+![Demo image](/public/DemoMesa3.png)
 
 ---
 
@@ -71,3 +75,8 @@ En esta materia estamos creando multiples proyectos los cuales se irán agregand
 23. Colores RGB, HEX y ARGB.
 24. Eventos de ratón (mouseHover, mouseClick, mouseDown, mouseUp, mouseMove).
 25. Colisiones de elementos.
+26. Lectura de archivos de Excel.
+27. Movimiento de elementos.
+28. Graficación de funciones matematicas.
+29. Usos de funciones matematicas para graficar.
+30. Optimización de código.

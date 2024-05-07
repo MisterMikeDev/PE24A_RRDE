@@ -390,7 +390,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "DlgMesaPracticas1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "PE Mesa Parcticas 1";
+            this.Text = "PE Mesa Practicas 1";
             this.PnlSuperior.ResumeLayout(false);
             this.PnlSuperior.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.LogoMesa1)).EndInit();

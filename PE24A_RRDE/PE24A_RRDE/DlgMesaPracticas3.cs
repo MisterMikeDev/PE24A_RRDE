@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,12 +21,19 @@ namespace PE24A_RRDE
         /* ------------------------------------------------------------------------- */
         // Atributos
         /* ------------------------------------------------------------------------- */
-        List<List<int>> ExcelData = new List<List<int>>();
+        private Excel.Application xlsxApp = null;
+        private Excel.Workbook xlsxWorkbook = null;
+        private Excel._Worksheet xlsxWorksheet = null;
+        private Excel.Range xlsxRange = null;
         private bool isLoading = false;
-        private Point? draggingPoint = null;
-        private int draggingIndex = -1;
-        List<Point> points = new List<Point>();
-        Timer debouce = new Timer();
+        private int LineHeight = 1;
+        private int margin = 40;
+        private bool isDragging = false;
+        private int selectedPointIndex = -1;
+        private Point lastMousePosition;
+        private double minX, maxX, minY, maxY;
+        private double scaleX, scaleY, scale;
+        private double offsetX, offsetY;
 
         /* ------------------------------------------------------------------------- */
         // Constructor
@@ -34,46 +42,105 @@ namespace PE24A_RRDE
         {
             InitializeComponent();
 
-            /* ------------------------------------------------------------------------- */
-            // Configuración de la ventana
-            /* ------------------------------------------------------------------------- */
+            StyleAllComponents();
+
             this.MinimumSize = new System.Drawing.Size(600, 400);
 
-            /* ------------------------------------------------------------------------- */
-            // Estilizar la tabla
-            /* ------------------------------------------------------------------------- */
-            StylingTable();
-
-            /* ------------------------------------------------------------------------- */
-            // Evento de cambio de tamaño
-            /* ------------------------------------------------------------------------- */
-            DlgMesaPracticas3_Resize(null, null);
-
-            /* ------------------------------------------------------------------------- */
-            // Eventos para el canvas
-            /* ------------------------------------------------------------------------- */
             PnlCanvas.MouseDown += new MouseEventHandler(PnlCanvas_MouseDown);
             PnlCanvas.MouseMove += new MouseEventHandler(PnlCanvas_MouseMove);
             PnlCanvas.MouseUp += new MouseEventHandler(PnlCanvas_MouseUp);
-
-            /* ------------------------------------------------------------------------- */
-            // Debounce para el evento MouseMove
-            /* ------------------------------------------------------------------------- */
-            debouce.Interval = 10;
-            debouce.Tick += new EventHandler((sender, e) =>
-            {
-                DrawVectors();
-                debouce.Stop();
-            });
+            PnlCanvas.Resize += new EventHandler((sender, e) => DrawPolygon());
         }
 
         /* ------------------------------------------------------------------------- */
-        // Evento de cambio de tamaño
+        // Evento MouseDown del panel Canvas
         /* ------------------------------------------------------------------------- */
-        private void DlgMesaPracticas3_Resize(object sender, EventArgs e) { }
+        private void PnlCanvas_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left && !isLoading)
+            {
+                for (int i = 0; i < DgvVectors.RowCount; i++)
+                {
+                    double x = Convert.ToDouble(DgvVectors.Rows[i].Cells["X"].Value);
+                    double y = Convert.ToDouble(DgvVectors.Rows[i].Cells["Y"].Value);
+
+                    int scaledX = (int)((x - minX) * scale) + margin + (int)offsetX;
+                    int scaledY = (int)((maxY - y) * scale) + margin + (int)offsetY;
+
+                    Rectangle pointRect = new Rectangle(scaledX - 5, scaledY - 5, 10, 10);
+
+                    if (pointRect.Contains(e.Location))
+                    {
+                        isDragging = true;
+                        selectedPointIndex = i;
+                        lastMousePosition = e.Location;
+                        break;
+                    }
+                }
+            }
+        }
 
         /* ------------------------------------------------------------------------- */
-        // Mostrar el canvas
+        // Evento MouseMove del panel Canvas
+        /* ------------------------------------------------------------------------- */
+        private void PnlCanvas_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (isDragging && selectedPointIndex != -1)
+            {
+                double x = Convert.ToDouble(DgvVectors.Rows[selectedPointIndex].Cells["X"].Value);
+                double y = Convert.ToDouble(DgvVectors.Rows[selectedPointIndex].Cells["Y"].Value);
+
+                x += (e.Location.X - lastMousePosition.X) / scale;
+                y -= (e.Location.Y - lastMousePosition.Y) / scale;
+
+                DgvVectors.Rows[selectedPointIndex].Cells["X"].Value = x;
+                DgvVectors.Rows[selectedPointIndex].Cells["Y"].Value = y;
+
+                lastMousePosition = e.Location;
+                CalcAll();
+            }
+        }
+
+        /* ------------------------------------------------------------------------- */
+        // Evento MouseUp del panel Canvas
+        /* ------------------------------------------------------------------------- */
+        private void PnlCanvas_MouseUp(object sender, MouseEventArgs e)
+        {
+            isDragging = false;
+            selectedPointIndex = -1;
+            CalcAll();
+        }
+
+        /* ------------------------------------------------------------------------- */
+        // Evento al cambiar el LineHeight
+        /* ------------------------------------------------------------------------- */
+        private void TrackBarLineHeight_Scroll(object sender, EventArgs e)
+        {
+            int TrackBarValue = TrackBarLineHeight.Value;
+            LblLineSize.Text = $"{TrackBarValue}px";
+            LineHeight = TrackBarValue;
+            DrawPolygon();
+        }
+
+        /* ------------------------------------------------------------------------- */
+        // Botón para importar datos de Excel
+        /* ------------------------------------------------------------------------- */
+        private void BtnImport_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Archivos de Excel (*.xlsx)|*.xlsx";
+            openFileDialog.Title = "Seleccionar archivo de Excel";
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                ImportExcel(openFileDialog.FileName);
+
+                CalcAll();
+            }
+        }
+
+        /* ------------------------------------------------------------------------- */
+        // Botón para mostrar/ocultar el panel Canvas
         /* ------------------------------------------------------------------------- */
         private void BtnShowCanvas_Click(object sender, EventArgs e)
         {
@@ -81,259 +148,278 @@ namespace PE24A_RRDE
         }
 
         /* ------------------------------------------------------------------------- */
-        // Boton que importa el contenido de un archivo Excel
-        /* ------------------------------------------------------------------------- */
-        private void BtnImport_Click(object sender, EventArgs e)
-        {
-            PnlCanvas.Visible = true;
-
-            string Path = "C:\\Dev\\learning-csharp\\PE24A_RRDE\\PE24A_RRDE\\Resources\\Data\\Vectors.xlsx";
-
-            List<List<int>> ExcelData = ReadExcel(Path);
-
-            WriteExcelToTable(ExcelData);
-
-            DrawVectors();
-
-        }
-
-        /* ------------------------------------------------------------------------- */
-        // Boton que dibuja o redibuja las coords de los puntos en el canvas
+        // Botón para dibujar el polígono
         /* ------------------------------------------------------------------------- */
         private void BtnDraw_Click(object sender, EventArgs e)
         {
-            DrawVectors();
+            DrawPolygon();
         }
 
         /* ------------------------------------------------------------------------- */
-        // Leer el contenido del Excel
+        // Calcular perímetro
         /* ------------------------------------------------------------------------- */
-        private List<List<int>> ReadExcel(string ExcelPath)
+        private double CalcPerimeter()
         {
-            CheckIsLoading(true);
+            double perimeter = 0;
+            double x1, x2, y1, y2;
 
-            if (ExcelData.Count != 0) ExcelData.Clear();
-
-            Excel.Application xlsxApp = new Excel.Application();
-            Excel.Workbook xlsxWorkbook = xlsxApp.Workbooks.Open(ExcelPath);
-            Excel._Worksheet xlsxWorksheet = xlsxWorkbook.Sheets[1];
-            Excel.Range xlsxRange = xlsxWorksheet.UsedRange;
-
-            int rowCount = xlsxRange.Rows.Count,
-                colCount = xlsxRange.Columns.Count;
-
-            for (int i = 2; i <= rowCount; i++)
+            if (DgvVectors.RowCount < 2)
             {
-                List<int> row = new List<int>();
+                MessageBox.Show("Se necesitan al menos dos puntos para calcular el perímetro", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return 0;
+            }
 
-                for (int j = 2; j <= colCount; j++)
+            x1 = Convert.ToDouble(DgvVectors.Rows[0].Cells["X"].Value);
+            y1 = Convert.ToDouble(DgvVectors.Rows[0].Cells["Y"].Value);
+
+            for (int i = 1; i < DgvVectors.RowCount; i++)
+            {
+                x2 = Convert.ToDouble(DgvVectors.Rows[i].Cells["X"].Value);
+                y2 = Convert.ToDouble(DgvVectors.Rows[i].Cells["Y"].Value);
+
+                perimeter += Math.Sqrt(Math.Pow(x2 - x1, 2) + Math.Pow(y2 - y1, 2));
+
+                x1 = x2;
+                y1 = y2;
+            }
+
+            x2 = Convert.ToDouble(DgvVectors.Rows[0].Cells["X"].Value);
+            y2 = Convert.ToDouble(DgvVectors.Rows[0].Cells["Y"].Value);
+            perimeter += Math.Sqrt(Math.Pow(x2 - x1, 2) + Math.Pow(y2 - y1, 2));
+
+            return perimeter;
+        }
+
+        /* ------------------------------------------------------------------------- */
+        // Calcular área
+        /* ------------------------------------------------------------------------- */
+        private double CalcArea()
+        {
+            double area = 0;
+
+            if (DgvVectors.RowCount < 3)
+            {
+                MessageBox.Show("Se necesitan al menos tres puntos para calcular el área utilizando el método de Shoelace", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return 0;
+            }
+
+            for (int i = 0; i < DgvVectors.RowCount - 1; i++)
+            {
+                double x1 = Convert.ToDouble(DgvVectors.Rows[i].Cells["X"].Value);
+                double y1 = Convert.ToDouble(DgvVectors.Rows[i].Cells["Y"].Value);
+                double x2 = Convert.ToDouble(DgvVectors.Rows[i + 1].Cells["X"].Value);
+                double y2 = Convert.ToDouble(DgvVectors.Rows[i + 1].Cells["Y"].Value);
+
+                area += x1 * y2 - x2 * y1;
+            }
+
+            double xLast = Convert.ToDouble(DgvVectors.Rows[DgvVectors.RowCount - 1].Cells["X"].Value);
+            double yLast = Convert.ToDouble(DgvVectors.Rows[DgvVectors.RowCount - 1].Cells["Y"].Value);
+            double xFirst = Convert.ToDouble(DgvVectors.Rows[0].Cells["X"].Value);
+            double yFirst = Convert.ToDouble(DgvVectors.Rows[0].Cells["Y"].Value);
+
+            area += xLast * yFirst - xFirst * yLast;
+
+            area = Math.Abs(area / 2);
+
+            return area;
+        }
+
+        /* ------------------------------------------------------------------------- */
+        // Calcular perímetro y área
+        /* ------------------------------------------------------------------------- */
+        private void CalcAll()
+        {
+            DrawPolygon();
+
+            int perimeter = (int)CalcPerimeter();
+            int area = (int)CalcArea();
+
+            TextBoxPerimeter.Text = $"{perimeter}";
+            TextBoxArea.Text = $"{area}";
+        }
+
+        /* ------------------------------------------------------------------------- */
+        // Importar datos de Excel
+        /* ------------------------------------------------------------------------- */
+        private void ImportExcel(string path)
+        {
+            SetLoading(true);
+
+            PnlCanvas.Visible = true;
+
+            TextBoxPerimeter.Text = "0";
+            TextBoxArea.Text = "0";
+
+            try
+            {
+                xlsxApp = new Excel.Application();
+                xlsxWorkbook = xlsxApp.Workbooks.Open(path);
+                xlsxWorksheet = xlsxWorkbook.Sheets[1];
+                xlsxRange = xlsxWorksheet.UsedRange;
+
+                int rowCount = xlsxRange.Rows.Count;
+                int colCount = xlsxRange.Columns.Count;
+
+                if (colCount < 2)
                 {
-                    int cellValue = (xlsxRange.Cells[i, j] as Excel.Range).Value2 != null
-                         ? Convert.ToInt32((xlsxRange.Cells[i, j] as Excel.Range).Value2)
-                         : 0;
-
-                    row.Add(cellValue);
+                    MessageBox.Show("El archivo Excel debe contener al menos 2 columnas (X y Y).");
+                    return;
                 }
 
-                ExcelData.Add(row);
+                DgvVectors.Columns.Clear();
+                DgvVectors.Rows.Clear();
+
+                DgvVectors.Columns.Add("Vectors", "Vectors");
+                DgvVectors.Columns.Add("X", "X");
+                DgvVectors.Columns.Add("Y", "Y");
+
+                for (int i = 2; i <= rowCount; i++)
+                {
+                    if (xlsxRange.Cells[i, 1].Value2 == null || xlsxRange.Cells[i, 2].Value2 == null || xlsxRange.Cells[i, 3].Value2 == null) continue;
+
+                    DgvVectors.Rows.Add(
+                        "V" + (i - 1),
+                        xlsxRange.Cells[i, 2].Value2.ToString(),
+                        xlsxRange.Cells[i, 3].Value2.ToString()
+                    );
+                }
+
             }
-
-            xlsxWorkbook.Close();
-            xlsxApp.Quit();
-
-            CheckIsLoading(false);
-
-            MessageBox.Show("Datos importados correctamente", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-            return ExcelData;
-        }
-
-        /* ------------------------------------------------------------------------- */
-        // Escribir el contenido del Excel en la tabla
-        /* ------------------------------------------------------------------------- */
-        private void WriteExcelToTable(List<List<int>> ExcelData)
-        {
-            DgvVectors.Rows.Clear();
-            DgvVectors.Columns.Clear();
-
-            DgvVectors.Columns.Add("vectors", "Vectors");
-            DgvVectors.Columns.Add("x", "X");
-            DgvVectors.Columns.Add("y", "Y");
-
-            for (int i = 0; i < ExcelData.Count; i++)
+            catch (Exception ex)
             {
-                List<int> vectorPair = ExcelData[i];
-
-                string vectorName = $"v{i + 1}";
-
-                int x = vectorPair[0];
-                int y = vectorPair[1];
-
-                DgvVectors.Rows.Add(vectorName, x, y);
+                MessageBox.Show($"Error: {ex.Message}");
+            }
+            finally
+            {
+                SetLoading(false);
+                xlsxWorkbook?.Close();
+                xlsxApp?.Quit();
             }
         }
 
         /* ------------------------------------------------------------------------- */
-        // Dibujar los vectores en el canvas
+        // Dibujar polígono en el panel Canvas
         /* ------------------------------------------------------------------------- */
-        private void DrawVectors()
+        private void DrawPolygon()
         {
-            points.Clear();
-
-            if (ExcelData.Count < 1 || ExcelData == null)
+            if (DgvVectors.RowCount < 1)
             {
                 MessageBox.Show("No hay datos para mostrar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            Random random = new Random();
             Graphics g = PnlCanvas.CreateGraphics();
-            Pen pen = new Pen(Color.Black, 2);
-            
             g.Clear(PnlCanvas.BackColor);
 
-            int W = PnlCanvas.Width,
-                H = PnlCanvas.Height,
-                scale = 4;
+            int canvasWidth = PnlCanvas.Width;
+            int canvasHeight = PnlCanvas.Height;
 
-            if (ExcelData.Count == 0) return;
+            minX = double.MaxValue;
+            maxX = double.MinValue;
+            minY = double.MaxValue;
+            maxY = double.MinValue;
 
-            for (int i = 0; i < ExcelData.Count; i++)
+            for (int i = 0; i < DgvVectors.RowCount; i++)
             {
-                List<int> vectorPair = ExcelData[i];
-                int x = vectorPair[0] * scale,
-                    y = vectorPair[1] * scale;
+                double x = Convert.ToDouble(DgvVectors.Rows[i].Cells["X"].Value);
+                double y = Convert.ToDouble(DgvVectors.Rows[i].Cells["Y"].Value);
 
-                x = Math.Max(0, Math.Min(x, W));
-                y = Math.Max(0, Math.Min(y, H));
-
-                points.Add(new Point(x, y));
-
-                int nextX = i + 1 < ExcelData.Count ? ExcelData[i + 1][0] * scale : ExcelData[0][0] * scale,
-                    nextY = i + 1 < ExcelData.Count ? ExcelData[i + 1][1] * scale : ExcelData[0][1] * scale;
-
-                nextX = Math.Max(0, Math.Min(nextX, W));
-                nextY = Math.Max(0, Math.Min(nextY, H));
-
-                if (i == ExcelData.Count - 1) g.DrawLine(pen, x, y, ExcelData[0][0] * scale, ExcelData[0][1] * scale);
-                else g.DrawLine(pen, x, y, nextX, nextY);
-
-                g.FillEllipse(
-                    new SolidBrush(Color.Red),
-                    x - 5, y - 5, 10, 10
-                );
+                if (x < minX) minX = x;
+                if (x > maxX) maxX = x;
+                if (y < minY) minY = y;
+                if (y > maxY) maxY = y;
             }
-        }
 
-        /* ------------------------------------------------------------------------- */
-        // Evento MouseDown para el canvas
-        /* ------------------------------------------------------------------------- */
-        private void PnlCanvas_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (isLoading) return;
+            double rangeX = maxX - minX;
+            double rangeY = maxY - minY;
 
-            int scale = 4,
-                radius = 10;
+            scaleX = (canvasWidth - 2 * margin) / rangeX;
+            scaleY = (canvasHeight - 2 * margin) / rangeY;
 
-            for (int i = 0; i < ExcelData.Count; i++)
+            scale = Math.Min(scaleX, scaleY);
+
+            offsetX = (canvasWidth - 2 * margin - scale * rangeX) / 2;
+            offsetY = (canvasHeight - 2 * margin - scale * rangeY) / 2;
+
+            for (int i = 0; i < DgvVectors.RowCount; i++)
             {
-                int x = ExcelData[i][0] * scale,
-                    y = ExcelData[i][1] * scale;
+                double x1 = Convert.ToDouble(DgvVectors.Rows[i].Cells["X"].Value);
+                double y1 = Convert.ToDouble(DgvVectors.Rows[i].Cells["Y"].Value);
+                double x2, y2;
 
-                if (Math.Pow(e.X - x, 2) + Math.Pow(e.Y - y, 2) <= Math.Pow(radius, 2))
+                if (i == DgvVectors.RowCount - 1)
                 {
-                    draggingPoint = new Point(x, y);
-                    draggingIndex = i;
-                    break;
+                    x2 = Convert.ToDouble(DgvVectors.Rows[0].Cells["X"].Value);
+                    y2 = Convert.ToDouble(DgvVectors.Rows[0].Cells["Y"].Value);
+                }
+                else
+                {
+                    x2 = Convert.ToDouble(DgvVectors.Rows[i + 1].Cells["X"].Value);
+                    y2 = Convert.ToDouble(DgvVectors.Rows[i + 1].Cells["Y"].Value);
+                }
+
+                int scaledX1 = (int)((x1 - minX) * scale) + margin + (int)offsetX;
+                int scaledY1 = (int)((maxY - y1) * scale) + margin + (int)offsetY;
+                int scaledX2 = (int)((x2 - minX) * scale) + margin + (int)offsetX;
+                int scaledY2 = (int)((maxY - y2) * scale) + margin + (int)offsetY;
+
+                using (Pen pen = new Pen(Color.Black, LineHeight))
+                {
+                    g.DrawLine(pen, scaledX1, scaledY1, scaledX2, scaledY2);
+                }
+
+                int ellipseSize = 2 * LineHeight + 5;
+                int offset = (ellipseSize - LineHeight) / 2;
+
+                int scaledX = (int)((x1 - minX) * scale) + margin + (int)offsetX;
+                int scaledY = (int)((maxY - y1) * scale) + margin + (int)offsetY;
+                g.FillEllipse(Brushes.Red, scaledX - offset, scaledY - offset, ellipseSize, ellipseSize);
+
+                if (!isDragging)
+                {
+                    string labelText = $"V{i + 1}";
+                    Font font = new Font("Arial", 18);
+                    SizeF size = g.MeasureString(labelText, font);
+                    g.DrawString(labelText, font, Brushes.Black, scaledX - size.Width / 2, scaledY - size.Height - 5);
                 }
             }
         }
 
         /* ------------------------------------------------------------------------- */
-        // Evento MouseMove para el canvas
+        // Establecer el estado de carga
         /* ------------------------------------------------------------------------- */
-        private void PnlCanvas_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (isLoading) return;
-
-            bool overPoint = points.Any(p => Math.Sqrt((p.X - e.X) * (p.X - e.X) + (p.Y - e.Y) * (p.Y - e.Y)) <= 10);
-            PnlCanvas.Cursor = overPoint ? Cursors.Hand : Cursors.Default;
-
-            if (draggingPoint.HasValue && e.Button == MouseButtons.Left)
-            {
-                int scale = 4,
-                    W = PnlCanvas.Width,
-                    H = PnlCanvas.Height,
-                    newX = Math.Max(0, Math.Min(e.X, W)) / scale,
-                    newY = Math.Max(0, Math.Min(e.Y, H)) / scale;
-
-                ExcelData[draggingIndex] = new List<int> { newX, newY };
-                draggingPoint = new Point(newX * scale, newY * scale);
-
-                DgvVectors.Rows[draggingIndex].Cells["x"].Value = newX;
-                DgvVectors.Rows[draggingIndex].Cells["y"].Value = newY;
-
-                debouce.Start();
-            }
-        }
-
-        /* ------------------------------------------------------------------------- */
-        // Evento MouseUp para el canvas
-        /* ------------------------------------------------------------------------- */
-        private void PnlCanvas_MouseUp(object sender, MouseEventArgs e)
-        {
-            if (isLoading) return;
-
-            draggingPoint = null;
-            draggingIndex = -1;
-            DrawVectors();
-            debouce.Stop();
-        }
-
-        /* ------------------------------------------------------------------------- */
-        // Verificar si se está cargando
-        /* ------------------------------------------------------------------------- */
-        private void CheckIsLoading(bool loading)
+        private void SetLoading(bool loading)
         {
             isLoading = loading;
-            if (isLoading)
-            {
-                BtnImport.Enabled = false;
-                BtnShowCanvas.Enabled = false;
-                BtnImport.Text = "Loading...";
-                BtnImport.BackColor = Color.FromArgb(162, 0, 255);
-            }
-            else
-            {
-                BtnImport.Enabled = true;
-                BtnShowCanvas.Enabled = true;
-                BtnImport.Text = "Importar";
-
-                BtnImport.BackColor = Color.FromArgb(0, 200, 0);
-            }
+            BtnImport.Text = loading ? "Cargando..." : "Importar";
+            BtnImport.Enabled = !loading;
+            BtnImport.BackColor = loading ? Color.FromArgb(0, 255, 0) : Color.FromArgb(162, 0, 255);
         }
 
         /* ------------------------------------------------------------------------- */
-        // Estilizar la tabla
+        // Estilizar todos los componentes
         /* ------------------------------------------------------------------------- */
-        private void StylingTable()
+        private void StyleAllComponents()
         {
+            TextBoxInitialX.Text = "0";
+            TextBoxInitialY.Text = "0";
+            TextBoxPerimeter.Text = "0";
+            TextBoxArea.Text = "0";
+
+            BtnImport.Text = "Importar";
+
             DgvVectors.AllowUserToResizeColumns = false;
             DgvVectors.AllowUserToResizeRows = false;
             DgvVectors.AllowUserToAddRows = false;
+
             DgvVectors.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             DgvVectors.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+
             DgvVectors.RowHeadersWidth = 30;
             DgvVectors.RowHeadersWidth = 4;
             DgvVectors.RowTemplate.Height = 28;
             DgvVectors.TabIndex = 0;
-        }
-
-        private void TrackBarLineHeight_Scroll(object sender, EventArgs e)
-        {
-            int TrackBarValue = TrackBarLineHeight.Value;
-
-            LblLineSize.Text = $"{TrackBarValue}px";
         }
     }
 }
