@@ -1,0 +1,15 @@
+C:\Dev\learning-csharp\PE24A_RRDE\PE24A_RRDE\bin\Debug\PE24A_RRDE.exe.config
+C:\Dev\learning-csharp\PE24A_RRDE\PE24A_RRDE\bin\Debug\PE24A_RRDE.exe
+C:\Dev\learning-csharp\PE24A_RRDE\PE24A_RRDE\bin\Debug\PE24A_RRDE.pdb
+C:\Dev\learning-csharp\PE24A_RRDE\PE24A_RRDE\obj\Debug\PE24A_RRDE.csproj.AssemblyReference.cache
+C:\Dev\learning-csharp\PE24A_RRDE\PE24A_RRDE\obj\Debug\PE24A_RRDE.Properties.Resources.resources
+C:\Dev\learning-csharp\PE24A_RRDE\PE24A_RRDE\obj\Debug\PE24A_RRDE.csproj.GenerateResource.cache
+C:\Dev\learning-csharp\PE24A_RRDE\PE24A_RRDE\obj\Debug\PE24A_RRDE.csproj.CoreCompileInputs.cache
+C:\Dev\learning-csharp\PE24A_RRDE\PE24A_RRDE\obj\Debug\PE24A_RRDE.exe
+C:\Dev\learning-csharp\PE24A_RRDE\PE24A_RRDE\obj\Debug\PE24A_RRDE.pdb
+C:\Dev\learning-csharp\PE24A_RRDE\PE24A_RRDE\obj\Debug\PE24A_RRDE.DlgPrincipal.resources
+C:\Dev\learning-csharp\PE24A_RRDE\PE24A_RRDE\obj\Debug\PE24A_RRDE.DlgMesaPracticas2.resources
+C:\Dev\learning-csharp\PE24A_RRDE\PE24A_RRDE\obj\Debug\PE24A_RRDE.DlgMesaPracticas1.resources
+C:\Dev\learning-csharp\PE24A_RRDE\PE24A_RRDE\obj\Debug\PE24A_RRDE.DlgMesaSoundboard.resources
+C:\Dev\learning-csharp\PE24A_RRDE\PE24A_RRDE\obj\Debug\PE24A_RRDE.DlgSecret.resources
+C:\Dev\learning-csharp\PE24A_RRDE\PE24A_RRDE\obj\Debug\PE24A_RRDE.DlgMesaPracticas3.resources
