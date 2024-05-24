@@ -11,7 +11,7 @@
 En este repositorio iré subiendo los avances de las tareas y proyectos que se realicen en la clase **"Programación Estructurada"** en la carrera **Ingeniería en Computación** en el **CucCosta**.
 
 - **Docente:** Cesar Froylan Andrade Cervantes
-- **Materia:** Ingeniería en Computación
+- **Materia:** Programación Estructurada
 - **Semestre:** 2024A-2024B
 
 ![Demo image](/public/DemoMain.png)
